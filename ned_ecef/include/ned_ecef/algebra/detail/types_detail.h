@@ -1,0 +1,114 @@
+#ifndef NED_ECEF__ALGEBRA__TYPES_DETAIL_H
+#define NED_ECEF__ALGEBRA__TYPES_DETAIL_H
+
+#include <array>
+#include <memory>
+
+namespace ned_ecef
+{
+namespace algebra
+{
+
+namespace detail
+{
+template <size_t N, size_t M, typename T = double>
+class TransposedMatrixImpl;
+
+template <size_t N, typename T = double>
+class VectorImpl;
+
+template <size_t N, size_t M, typename T = double>
+class MatrixImpl;
+}  // namespace detail
+
+template <size_t N, size_t M, typename T = double>
+detail::MatrixImpl<N, M, T> MakeMatrix();
+
+template <size_t N, typename T = double>
+detail::VectorImpl<N, T> MakeVector();
+
+template <size_t N, size_t M, typename T, typename V = double>
+class Matrix;
+
+namespace detail
+{
+template <size_t N, size_t M, typename T = double>
+using RawMatrix = std::array<std::array<T, M>, N>;
+
+template <size_t N, size_t M, typename T = double>
+class IndexSwap
+{
+  public:
+    using index_type = size_t;
+
+    friend TransposedMatrixImpl<N, M, T>;
+
+    T operator[](index_type inner_index)
+    {
+        return (*matrix_)[inner_index][index_];
+    }
+
+  private:
+    IndexSwap(RawMatrix<N, M, T>& matrix, index_type index) : index_{index}, matrix_{matrix} {}
+
+    index_type index_;
+    RawMatrix<N, M, T>& matrix_;
+};
+
+template <size_t N, size_t M, typename T>
+class TransposedMatrixImpl : public Matrix<N, M, TransposedMatrixImpl<N, M, T>, T>
+{
+  public:
+    using BaseType = Matrix<N, M, TransposedMatrixImpl<N, M, T>, T>;
+
+    IndexSwap<N, M, T> operator[](typename BaseType::index_type index)
+    {
+        return IndexSwap<N, M, T>(BaseType::matrix_, index);
+    }
+
+  private:
+    TransposedMatrixImpl() {}
+};
+
+template <size_t N, typename T>
+class VectorImpl : public Matrix<N, 1, VectorImpl<N, T>, T>
+{
+  public:
+    using BaseType = Matrix<N, 1, VectorImpl<N, T>, T>;
+    using ValueType = T;
+
+    T operator[](typename BaseType::index_type index)
+    {
+        return BaseType::matrix_[index][0];
+    }
+
+  private:
+    VectorImpl() {}
+
+    friend VectorImpl<N, T> MakeVector<N, T>();
+};
+
+template <size_t N, size_t M, typename T>
+class MatrixImpl : public Matrix<N, M, MatrixImpl<N, M, T>, T>
+{
+  public:
+    using BaseType = Matrix<N, M, MatrixImpl<N, M, T>, T>;
+    using ValueType = std::array<T, M>;
+
+    std::array<T, M>& operator[](typename BaseType::index_type index)
+    {
+        return BaseType::matrix_[index];
+    }
+
+  private:
+    MatrixImpl() {}
+
+    friend MatrixImpl<N, M, T> MakeMatrix<N, M, T>();
+};
+}  // namespace detail
+
+}  // namespace algebra
+
+}  // namespace ned_ecef
+
+#endif  // NED_ECEF__ALGEBRA__TYPES_DETAIL_H
