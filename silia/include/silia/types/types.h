@@ -24,6 +24,19 @@ class Matrix
         return static_cast<T*>(this)->operator[](index);
     }
 
+    Matrix(V const (&list)[N][M]) : matrix_{}
+    {
+        for (size_t i = 0; i < N; ++i)
+        {
+            for (size_t j = 0; j < N; ++j)
+            {
+                matrix_[i][j] = list[i][j];
+            }
+        }
+    }
+
+    Matrix() : matrix_{} {}
+
   protected:
     detail::RawMatrix<N, M, V> matrix_;
 };

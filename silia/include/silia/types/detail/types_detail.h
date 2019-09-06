@@ -59,6 +59,7 @@ class TransposedMatrixImpl : public Matrix<N, M, TransposedMatrixImpl<N, M, T>, 
 {
   public:
     using BaseType = Matrix<N, M, TransposedMatrixImpl<N, M, T>, T>;
+    using BaseType::Matrix;
 
     IndexSwap<N, M, T> operator[](typename BaseType::index_type index)
     {
@@ -75,6 +76,14 @@ class VectorImpl : public Matrix<N, 1, VectorImpl<N, T>, T>
   public:
     using BaseType = Matrix<N, 1, VectorImpl<N, T>, T>;
     using ValueType = T;
+
+    VectorImpl(T const (&list)[N])
+    {
+        for (size_t i = 0; i < N; ++i)
+        {
+            BaseType::matrix_[i][0] = list[i];
+        }
+    }
 
     T& operator[](typename BaseType::index_type index)
     {
@@ -93,6 +102,7 @@ class MatrixImpl : public Matrix<N, M, MatrixImpl<N, M, T>, T>
   public:
     using BaseType = Matrix<N, M, MatrixImpl<N, M, T>, T>;
     using ValueType = std::array<T, M>;
+    using BaseType::Matrix;
 
     std::array<T, M>& operator[](typename BaseType::index_type index)
     {
