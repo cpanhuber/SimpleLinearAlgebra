@@ -76,7 +76,7 @@ class VectorImpl : public Matrix<N, 1, VectorImpl<N, T>, T>
     using BaseType = Matrix<N, 1, VectorImpl<N, T>, T>;
     using ValueType = T;
 
-    T operator[](typename BaseType::index_type index)
+    T& operator[](typename BaseType::index_type index)
     {
         return BaseType::matrix_[index][0];
     }
