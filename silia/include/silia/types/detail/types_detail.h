@@ -1,16 +1,15 @@
-#ifndef NED_ECEF__ALGEBRA__TYPES_DETAIL_H
-#define NED_ECEF__ALGEBRA__TYPES_DETAIL_H
+#ifndef SILIA__TYPES__DETAIL__TYPES_DETAIL_H
+#define SILIA__TYPES__DETAIL__TYPES_DETAIL_H
 
 #include <array>
 #include <memory>
 
-namespace ned_ecef
-{
-namespace algebra
+namespace silia
 {
 
 namespace detail
 {
+
 template <size_t N, size_t M, typename T = double>
 class TransposedMatrixImpl;
 
@@ -107,8 +106,6 @@ class MatrixImpl : public Matrix<N, M, MatrixImpl<N, M, T>, T>
 };
 }  // namespace detail
 
-}  // namespace algebra
+}  // namespace silia
 
-}  // namespace ned_ecef
-
-#endif  // NED_ECEF__ALGEBRA__TYPES_DETAIL_H
+#endif  // SILIA__TYPES__DETAIL__TYPES_DETAIL_H

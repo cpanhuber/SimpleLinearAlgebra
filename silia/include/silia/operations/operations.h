@@ -1,14 +1,11 @@
-#ifndef NED_ECEF__ALGEBRA__OPERATIONS_H
-#define NED_ECEF__ALGEBRA__OPERATIONS_H
+#ifndef SILIA__OPERATIONS__OPERATIONS_H
+#define SILIA__OPERATIONS__OPERATIONS_H
 
-#include <ned_ecef/algebra/types.h>
+#include <silia/types/types.h>
 
 #include <array>
 
-namespace ned_ecef
-{
-
-namespace algebra
+namespace silia
 {
 
 template <size_t I, size_t J, size_t K, typename T, typename MatrixTypeLeft, typename MatrixTypeRight>
@@ -43,8 +40,6 @@ T operator*(const Matrix<N, 1, MatrixTypeLeft, T> left, const Matrix<1, N, Matri
     return result;
 }
 
-}  // namespace algebra
+}  // namespace silia
 
-}  // namespace ned_ecef
-
-#endif  // NED_ECEF__ALGEBRA__OPERATIONS_H
+#endif  // SILIA__OPERATIONS__OPERATIONS_H

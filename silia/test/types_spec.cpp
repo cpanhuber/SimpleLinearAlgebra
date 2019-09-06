@@ -1,19 +1,16 @@
-#include <ned_ecef/algebra/factories.h>
-#include <ned_ecef/algebra/operations.h>
-#include <ned_ecef/algebra/types.h>
+#include <silia/types/factories.h>
+#include <silia/types/types.h>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-namespace ned_ecef
-{
-namespace algebra
+namespace silia
 {
 namespace
 {
 using namespace testing;
 
-TEST(Algebra, Matrix_OperatorAt)
+TEST(Types, Matrix_OperatorAt)
 {
     auto matrix = MakeMatrix<1, 2, int>();
 
@@ -26,6 +23,4 @@ TEST(Algebra, Matrix_OperatorAt)
 
 }  // namespace
 
-}  // namespace algebra
-
-}  // namespace ned_ecef
+}  // namespace silia

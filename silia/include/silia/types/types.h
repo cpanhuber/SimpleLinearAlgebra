@@ -1,14 +1,12 @@
-#ifndef NED_ECEF__ALGEBRA__TYPES_H
-#define NED_ECEF__ALGEBRA__TYPES_H
+#ifndef SILIA__TYPES__TYPES_H
+#define SILIA__TYPES__TYPES_H
 
-#include <ned_ecef/algebra/detail/types_detail.h>
+#include <silia/types/detail/types_detail.h>
 
 #include <cstddef>
 #include <type_traits>
 
-namespace ned_ecef
-{
-namespace algebra
+namespace silia
 {
 
 template <size_t N, size_t M, typename Derived, typename V>
@@ -30,8 +28,6 @@ class Matrix
     detail::RawMatrix<N, M, V> matrix_;
 };
 
-}  // namespace algebra
+}  // namespace silia
 
-}  // namespace ned_ecef
-
-#endif  // NED_ECEF__ALGEBRA__TYPES_H
+#endif  // SILIA__TYPES__TYPES_H
