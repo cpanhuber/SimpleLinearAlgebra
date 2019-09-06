@@ -42,9 +42,14 @@ class IndexSwap
 
     friend TransposedMatrixImpl<N, M, T>;
 
-    T operator[](index_type inner_index)
+    T& operator[](index_type inner_index)
     {
-        return (*matrix_)[inner_index][index_];
+        return matrix_[inner_index][index_];
+    }
+
+    T operator[](index_type inner_index) const
+    {
+        return matrix_[inner_index][index_];
     }
 
   private:
@@ -62,6 +67,11 @@ class TransposedMatrixImpl : public Matrix<N, M, TransposedMatrixImpl<N, M, T>, 
     using BaseType::Matrix;
 
     IndexSwap<N, M, T> operator[](typename BaseType::index_type index)
+    {
+        return IndexSwap<N, M, T>(BaseType::matrix_, index);
+    }
+
+    IndexSwap<N, M, T> operator[](typename BaseType::index_type index) const
     {
         return IndexSwap<N, M, T>(BaseType::matrix_, index);
     }
@@ -90,6 +100,11 @@ class VectorImpl : public Matrix<N, 1, VectorImpl<N, T>, T>
         return BaseType::matrix_[index][0];
     }
 
+    T const& operator[](typename BaseType::index_type index) const
+    {
+        return BaseType::matrix_[index][0];
+    }
+
   private:
     VectorImpl() {}
 
@@ -105,6 +120,11 @@ class MatrixImpl : public Matrix<N, M, MatrixImpl<N, M, T>, T>
     using BaseType::Matrix;
 
     std::array<T, M>& operator[](typename BaseType::index_type index)
+    {
+        return BaseType::matrix_[index];
+    }
+
+    std::array<T, M> const& operator[](typename BaseType::index_type index) const
     {
         return BaseType::matrix_[index];
     }

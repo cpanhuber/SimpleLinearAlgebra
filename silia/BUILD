@@ -30,3 +30,12 @@ cc_test(
         ":silia_types_lib",
     ],
 )
+
+cc_test(
+    name = "operations_spec",
+    srcs = ["test/operations_spec.cpp"],
+    deps = [
+        "@gtest//:gtest_main",
+        ":silia_operations_lib",
+    ],
+)

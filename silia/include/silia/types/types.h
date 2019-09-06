@@ -16,12 +16,21 @@ class Matrix
     using index_type = size_t;
 
     template <typename T = Derived>
-    auto operator[](index_type index) -> typename std::result_of<decltype (&T::operator[])(T, index_type)>::type&
+    auto operator[](index_type index) -> decltype(std::declval<T>()[0])
     {
         static_assert(std::is_same<T, Derived>::value,
                       "Only the default template argument is allowed for Matrix::operator[]");
 
         return static_cast<T*>(this)->operator[](index);
+    }
+
+    template <typename T = Derived>
+    auto operator[](index_type index) const -> decltype(std::declval<T const>()[0])
+    {
+        static_assert(std::is_same<T, Derived>::value,
+                      "Only the default template argument is allowed for Matrix::operator[]");
+
+        return static_cast<T const*>(this)->operator[](index);
     }
 
     Matrix(V const (&list)[N][M]) : matrix_{}
