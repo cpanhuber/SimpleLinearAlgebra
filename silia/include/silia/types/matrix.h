@@ -33,7 +33,7 @@ class Matrix
         return static_cast<T const*>(this)->operator[](index);
     }
 
-    detail::TransposedMatrixImpl<M, N, V> Transpose()
+    detail::TransposedMatrixImpl<M, N, V> TransposedView()
     {
         return detail::TransposedMatrixImpl<M, N, V>(matrix_);
     }
