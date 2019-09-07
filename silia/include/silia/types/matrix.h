@@ -33,6 +33,11 @@ class Matrix
         return static_cast<T const*>(this)->operator[](index);
     }
 
+    detail::TransposedMatrixImpl<M, N, V> Transpose()
+    {
+        return detail::TransposedMatrixImpl<M, N, V>(matrix_);
+    }
+
     Matrix(V const (&list)[N][M]) : matrix_{}
     {
         for (size_t i = 0; i < N; ++i)

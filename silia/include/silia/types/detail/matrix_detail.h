@@ -41,7 +41,7 @@ class IndexSwap
   public:
     using index_type = size_t;
 
-    friend TransposedMatrixImpl<N, M, T>;
+    friend TransposedMatrixImpl<M, N, T>;
 
     T& operator[](index_type inner_index)
     {
@@ -139,24 +139,26 @@ T operator+(const IndexableScalarConst<N, T>& left, const IndexableScalarConst<M
 }
 
 template <size_t N, size_t M, typename T>
-class TransposedMatrixImpl : public Matrix<N, M, TransposedMatrixImpl<N, M, T>, T>
+class TransposedMatrixImpl
 {
   public:
-    using BaseType = Matrix<N, M, TransposedMatrixImpl<N, M, T>, T>;
-    using BaseType::Matrix;
+    using index_type = size_t;
+    friend Matrix<M, 1, detail::VectorImpl<M, T>, T>;
+    friend Matrix<M, N, detail::MatrixImpl<M, N, T>, T>;
 
-    IndexSwap<N, M, T> operator[](typename BaseType::index_type index)
+    IndexSwap<M, N, T> operator[](index_type index)
     {
-        return IndexSwap<N, M, T>(BaseType::matrix_, index);
+        return IndexSwap<M, N, T>(matrix_, index);
     }
 
-    IndexSwap<N, M, T> operator[](typename BaseType::index_type index) const
+    IndexSwap<N, M, T> operator[](index_type index) const
     {
-        return IndexSwap<N, M, T>(BaseType::matrix_, index);
+        return IndexSwap<M, N, T>(matrix_, index);
     }
 
   private:
-    TransposedMatrixImpl() {}
+    TransposedMatrixImpl(RawMatrix<M, N, T>& matrix) : matrix_{matrix} {}
+    RawMatrix<M, N, T>& matrix_;
 };
 
 template <size_t N, typename T>

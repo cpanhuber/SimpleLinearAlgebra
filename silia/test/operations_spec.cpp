@@ -65,6 +65,29 @@ TEST(Operations, Multiplication_WhenVectorDotProduct)
     EXPECT_EQ(8, v3);
 }
 
+TEST(Operations, CopylessTranspose_WhenMatrix)
+{
+    auto m = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
+
+    EXPECT_EQ(5, m.Transpose()[0][0]);
+    EXPECT_EQ(3, m.Transpose()[0][1]);
+    EXPECT_EQ(1, m.Transpose()[0][2]);
+    EXPECT_EQ(4, m.Transpose()[1][0]);
+    EXPECT_EQ(2, m.Transpose()[1][1]);
+    EXPECT_EQ(0, m.Transpose()[1][2]);
+    EXPECT_EQ(&(m[0][0]), &(m.Transpose()[0][0]));
+}
+
+TEST(Operations, CopylessTranspose_WhenVector)
+{
+    auto v = MakeVector({5, 4, 3});
+
+    EXPECT_EQ(5, v.Transpose()[0][0]);
+    EXPECT_EQ(4, v.Transpose()[0][1]);
+    EXPECT_EQ(3, v.Transpose()[0][2]);
+    EXPECT_EQ(&(v[0][0]), &(v.Transpose()[0][0]));
+}
+
 }  // namespace
 
 }  // namespace silia
