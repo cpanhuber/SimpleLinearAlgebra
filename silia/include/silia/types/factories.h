@@ -6,25 +6,25 @@
 namespace silia
 {
 template <size_t N, size_t M, typename T>
-detail::MatrixImpl<N, M, T> MakeMatrix()
+Matrix<N, M, detail::MatrixImpl<N, M, T>, T> MakeMatrix()
 {
     return detail::MatrixImpl<N, M, T>{};
 }
 
 template <size_t N, size_t M, typename T>
-detail::MatrixImpl<N, M, T> MakeMatrix(T const (&list)[N][M])
+Matrix<N, M, detail::MatrixImpl<N, M, T>, T> MakeMatrix(T const (&list)[N][M])
 {
     return detail::MatrixImpl<N, M, T>{list};
 }
 
 template <size_t N, typename T>
-detail::VectorImpl<N, T> MakeVector()
+Matrix<N, 1, detail::VectorImpl<N, T>, T> MakeVector()
 {
     return detail::VectorImpl<N, T>{};
 }
 
 template <size_t N, typename T>
-detail::VectorImpl<N, T> MakeVector(T const (&list)[N])
+Matrix<N, 1, detail::VectorImpl<N, T>, T> MakeVector(T const (&list)[N])
 {
     return detail::VectorImpl<N, T>{list};
 }

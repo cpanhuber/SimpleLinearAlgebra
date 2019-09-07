@@ -20,14 +20,14 @@ template <size_t N, size_t M, typename T = double>
 class MatrixImpl;
 }  // namespace detail
 
-template <size_t N, size_t M, typename T = double>
-detail::MatrixImpl<N, M, T> MakeMatrix();
-
-template <size_t N, typename T = double>
-detail::VectorImpl<N, T> MakeVector();
-
 template <size_t N, size_t M, typename T, typename V = double>
 class Matrix;
+
+template <size_t N, size_t M, typename T = double>
+Matrix<N, M, detail::MatrixImpl<N, M, T>, T> MakeMatrix();
+
+template <size_t N, typename T = double>
+Matrix<N, 1, detail::VectorImpl<N, T>, T> MakeVector();
 
 namespace detail
 {
@@ -108,7 +108,7 @@ class VectorImpl : public Matrix<N, 1, VectorImpl<N, T>, T>
   private:
     VectorImpl() {}
 
-    friend VectorImpl<N, T> MakeVector<N, T>();
+    friend Matrix<N, 1, VectorImpl<N, T>, T> MakeVector<N, T>();
 };
 
 template <size_t N, size_t M, typename T>
@@ -132,7 +132,7 @@ class MatrixImpl : public Matrix<N, M, MatrixImpl<N, M, T>, T>
   private:
     MatrixImpl() {}
 
-    friend MatrixImpl<N, M, T> MakeMatrix<N, M, T>();
+    friend Matrix<N, M, MatrixImpl<N, M, T>, T> MakeMatrix<N, M, T>();
 };
 }  // namespace detail
 

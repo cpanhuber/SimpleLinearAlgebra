@@ -15,13 +15,13 @@ using namespace testing;
 TEST(Types, MakeMatrix)
 {
     auto matrix = MakeMatrix<3, 4, double>();
-    static_assert(std::is_same<decltype(matrix), detail::MatrixImpl<3, 4, double>>::value);
+    static_assert(std::is_same<decltype(matrix), Matrix<3, 4, detail::MatrixImpl<3, 4, double>, double>>::value);
 }
 
 TEST(Types, MakeVector)
 {
     auto vector = MakeVector<3, double>();
-    static_assert(std::is_same<decltype(vector), detail::VectorImpl<3, double>>::value);
+    static_assert(std::is_same<decltype(vector), Matrix<3, 1, detail::VectorImpl<3, double>, double>>::value);
 }
 
 TEST(Types, Matrix_OperatorAt)
@@ -50,7 +50,7 @@ TEST(Types, MakeMatrixFromArray)
 {
     auto matrix = MakeMatrix<3, 2, int>({{0, 1}, {2, 3}, {4, 5}});
 
-    static_assert(std::is_same<decltype(matrix), detail::MatrixImpl<3, 2, int>>::value);
+    static_assert(std::is_same<decltype(matrix), Matrix<3, 2, detail::MatrixImpl<3, 2, int>, int>>::value);
     EXPECT_EQ(0, matrix[0][0]);
     EXPECT_EQ(1, matrix[0][1]);
     EXPECT_EQ(2, matrix[1][0]);
@@ -63,7 +63,7 @@ TEST(Types, MakeVectorFromArray)
 {
     auto vector = MakeVector<3, int>({0, 1, 2});
 
-    static_assert(std::is_same<decltype(vector), detail::VectorImpl<3, int>>::value);
+    static_assert(std::is_same<decltype(vector), Matrix<3, 1, detail::VectorImpl<3, int>, int>>::value);
     EXPECT_EQ(0, vector[0]);
     EXPECT_EQ(1, vector[1]);
     EXPECT_EQ(2, vector[2]);
