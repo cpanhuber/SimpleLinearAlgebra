@@ -29,7 +29,7 @@ Matrix<I, K, detail::MatrixImpl<I, K, T>, T> operator*(const Matrix<I, J, Matrix
 }
 
 template <size_t N, typename T, typename MatrixTypeLeft, typename MatrixTypeRight>
-T operator*(const Matrix<N, 1, MatrixTypeLeft, T> left, const Matrix<1, N, MatrixTypeRight, T> right)
+T operator*(const Matrix<1, N, MatrixTypeLeft, T> left, const Matrix<N, 1, MatrixTypeRight, T> right)
 {
     T result{};
     for (size_t i = 0; i < N; ++i)

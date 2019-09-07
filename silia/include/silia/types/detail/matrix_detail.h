@@ -2,6 +2,7 @@
 #define SILIA__TYPES__DETAIL__MATRIX_DETAIL_H
 
 #include <array>
+#include <cassert>
 #include <memory>
 
 namespace silia
@@ -59,6 +60,67 @@ class IndexSwap
     RawMatrix<N, M, T>& matrix_;
 };
 
+template <size_t N, typename T = double>
+class IndexableScalar
+{
+  public:
+    using index_type = size_t;
+
+    friend VectorImpl<N, T>;
+
+    T& operator[](index_type index)
+    {
+        assert(index == 0);
+        return value_;
+    }
+
+    T operator[](index_type index) const
+    {
+        assert(index == 0);
+        return value_;
+    }
+
+    operator T() const
+    {
+        return value_;
+    }
+
+    void operator=(const T& value)
+    {
+        value_ = value;
+    }
+
+  private:
+    IndexableScalar(T& value) : value_{value} {}
+
+    T& value_;
+};
+
+template <size_t N, typename T = double>
+class IndexableScalarConst
+{
+  public:
+    using index_type = size_t;
+
+    friend VectorImpl<N, T>;
+
+    T operator[](index_type index) const
+    {
+        assert(index == 0);
+        return value_;
+    }
+
+    operator T() const
+    {
+        return value_;
+    }
+
+  private:
+    IndexableScalarConst(T const& value) : value_{value} {}
+
+    const T& value_;
+};
+
 template <size_t N, size_t M, typename T>
 class TransposedMatrixImpl : public Matrix<N, M, TransposedMatrixImpl<N, M, T>, T>
 {
@@ -95,14 +157,14 @@ class VectorImpl : public Matrix<N, 1, VectorImpl<N, T>, T>
         }
     }
 
-    T& operator[](typename BaseType::index_type index)
+    IndexableScalar<N, T> operator[](typename BaseType::index_type index)
     {
-        return BaseType::matrix_[index][0];
+        return IndexableScalar<N, T>(BaseType::matrix_[index][0]);
     }
 
-    T const& operator[](typename BaseType::index_type index) const
+    IndexableScalarConst<N, T> operator[](typename BaseType::index_type index) const
     {
-        return BaseType::matrix_[index][0];
+        return IndexableScalarConst<N, T>(BaseType::matrix_[index][0]);
     }
 
   private:
