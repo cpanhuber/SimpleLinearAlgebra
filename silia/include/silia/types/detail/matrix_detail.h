@@ -1,5 +1,5 @@
-#ifndef SILIA__TYPES__DETAIL__TYPES_DETAIL_H
-#define SILIA__TYPES__DETAIL__TYPES_DETAIL_H
+#ifndef SILIA__TYPES__DETAIL__MATRIX_DETAIL_H
+#define SILIA__TYPES__DETAIL__MATRIX_DETAIL_H
 
 #include <array>
 #include <memory>
@@ -138,4 +138,4 @@ class MatrixImpl : public Matrix<N, M, MatrixImpl<N, M, T>, T>
 
 }  // namespace silia
 
-#endif  // SILIA__TYPES__DETAIL__TYPES_DETAIL_H
+#endif  // SILIA__TYPES__DETAIL__MATRIX_DETAIL_H

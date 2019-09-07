@@ -1,55 +1,34 @@
 #ifndef SILIA__TYPES__TYPES_H
 #define SILIA__TYPES__TYPES_H
 
-#include <silia/types/detail/types_detail.h>
-
-#include <cstddef>
-#include <type_traits>
+#include <silia/types/matrix.h>
 
 namespace silia
 {
+using Matrix4d = Matrix<4, 4, detail::MatrixImpl<4, 4, double>, double>;
+using Matrix4f = Matrix<4, 4, detail::MatrixImpl<4, 4, float>, float>;
+using Matrix4i = Matrix<4, 4, detail::MatrixImpl<4, 4, int>, int>;
 
-template <size_t N, size_t M, typename Derived, typename V>
-class Matrix
-{
-  public:
-    using index_type = size_t;
+using Matrix3d = Matrix<3, 3, detail::MatrixImpl<3, 3, double>, double>;
+using Matrix3f = Matrix<3, 3, detail::MatrixImpl<3, 3, float>, float>;
+using Matrix3i = Matrix<3, 3, detail::MatrixImpl<3, 3, int>, int>;
 
-    template <typename T = Derived>
-    auto operator[](index_type index) -> decltype(std::declval<T>()[0])
-    {
-        static_assert(std::is_same<T, Derived>::value,
-                      "Only the default template argument is allowed for Matrix::operator[]");
+using Matrix2d = Matrix<2, 2, detail::MatrixImpl<2, 2, double>, double>;
+using Matrix2f = Matrix<2, 2, detail::MatrixImpl<2, 2, float>, float>;
+using Matrix2i = Matrix<2, 2, detail::MatrixImpl<2, 2, int>, int>;
 
-        return static_cast<T*>(this)->operator[](index);
-    }
+using Vector4d = Matrix<4, 1, detail::VectorImpl<4, double>, double>;
+using Vector4f = Matrix<4, 1, detail::VectorImpl<4, float>, float>;
+using Vector4i = Matrix<4, 1, detail::VectorImpl<4, int>, int>;
 
-    template <typename T = Derived>
-    auto operator[](index_type index) const -> decltype(std::declval<T const>()[0])
-    {
-        static_assert(std::is_same<T, Derived>::value,
-                      "Only the default template argument is allowed for Matrix::operator[]");
+using Vector3d = Matrix<3, 1, detail::VectorImpl<3, double>, double>;
+using Vector3f = Matrix<3, 1, detail::VectorImpl<3, float>, float>;
+using Vector3i = Matrix<3, 1, detail::VectorImpl<3, int>, int>;
 
-        return static_cast<T const*>(this)->operator[](index);
-    }
-
-    Matrix(V const (&list)[N][M]) : matrix_{}
-    {
-        for (size_t i = 0; i < N; ++i)
-        {
-            for (size_t j = 0; j < N; ++j)
-            {
-                matrix_[i][j] = list[i][j];
-            }
-        }
-    }
-
-    Matrix() : matrix_{} {}
-
-  protected:
-    detail::RawMatrix<N, M, V> matrix_;
-};
-
+using Vector2d = Matrix<2, 1, detail::VectorImpl<2, double>, double>;
+using Vector2f = Matrix<2, 1, detail::VectorImpl<2, float>, float>;
+using Vector2i = Matrix<2, 1, detail::VectorImpl<2, int>, int>;
 }  // namespace silia
 
 #endif  // SILIA__TYPES__TYPES_H
+

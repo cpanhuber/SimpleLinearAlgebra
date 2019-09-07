@@ -1,7 +1,7 @@
 #ifndef SILIA__TYPES__FACTORIES_H
 #define SILIA__TYPES__FACTORIES_H
 
-#include <silia/types/detail/types_detail.h>
+#include <silia/types/detail/matrix_detail.h>
 
 namespace silia
 {
