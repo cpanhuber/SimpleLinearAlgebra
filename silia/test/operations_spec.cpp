@@ -54,6 +54,17 @@ TEST(Operations, Multiplication_WhenMatrixVector)
     EXPECT_EQ(4, v2[1]);
 }
 
+TEST(Operations, Multiplication_WhenVectorDotProduct)
+{
+    Vector3i v1 = MakeVector({3, 2, 1});
+    Vector3i v2 = MakeVector({2, 1, 0});
+
+    auto v3 = v1 * v2;
+
+    static_assert(std::is_same<decltype(v3), int>::value);
+    EXPECT_EQ(8, v3);
+}
+
 }  // namespace
 
 }  // namespace silia

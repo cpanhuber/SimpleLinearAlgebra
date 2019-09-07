@@ -45,13 +45,14 @@ Matrix<I, 1, detail::VectorImpl<I, T>, T> operator*(const Matrix<I, J, MatrixTyp
     return result;
 }
 
-template <size_t N, typename T, typename MatrixTypeLeft, typename MatrixTypeRight>
-T operator*(const Matrix<1, N, MatrixTypeLeft, T> left, const Matrix<N, 1, MatrixTypeRight, T> right)
+template <size_t N, typename T>
+T operator*(const Matrix<N, 1, detail::VectorImpl<N, T>, T>& left,
+            const Matrix<N, 1, detail::VectorImpl<N, T>, T>& right)
 {
     T result{};
     for (size_t i = 0; i < N; ++i)
     {
-        result += left[0][i] * right[i][0];
+        result += left[i] * right[i];
     }
 
     return result;
