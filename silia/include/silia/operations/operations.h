@@ -28,6 +28,23 @@ Matrix<I, K, detail::MatrixImpl<I, K, T>, T> operator*(const Matrix<I, J, Matrix
     return result;
 }
 
+template <size_t I, size_t J, typename T, typename MatrixTypeLeft>
+Matrix<I, 1, detail::VectorImpl<I, T>, T> operator*(const Matrix<I, J, MatrixTypeLeft, T>& left,
+                                                    const Matrix<J, 1, detail::VectorImpl<J, T>, T>& right)
+{
+    auto result = MakeVector<I, T>();
+    for (size_t i = 0; i < I; ++i)
+    {
+        result[i] = T{};
+        for (size_t j = 0; j < J; ++j)
+        {
+            result[i] += left[i][j] * right[j];
+        }
+    }
+
+    return result;
+}
+
 template <size_t N, typename T, typename MatrixTypeLeft, typename MatrixTypeRight>
 T operator*(const Matrix<1, N, MatrixTypeLeft, T> left, const Matrix<N, 1, MatrixTypeRight, T> right)
 {

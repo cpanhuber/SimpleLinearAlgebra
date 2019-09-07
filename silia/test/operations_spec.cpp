@@ -42,6 +42,18 @@ TEST(Operations, Multiplication_WhenVectorMatrix)
     EXPECT_EQ(2, m2[1][1]);
 }
 
+TEST(Operations, Multiplication_WhenMatrixVector)
+{
+    Vector2i v1 = MakeVector({2, 1});
+    auto m = MakeMatrix({{4, 3}, {1, 2}});
+
+    auto v2 = m * v1;
+
+    static_assert(std::is_same<decltype(v2), Matrix<2, 1, detail::VectorImpl<2, int>, int>>::value);
+    EXPECT_EQ(11, v2[0]);
+    EXPECT_EQ(4, v2[1]);
+}
+
 }  // namespace
 
 }  // namespace silia

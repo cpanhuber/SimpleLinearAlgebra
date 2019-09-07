@@ -90,11 +90,22 @@ class IndexableScalar
         value_ = value;
     }
 
+    void operator+=(const T& value)
+    {
+        value_ += value;
+    }
+
   private:
     IndexableScalar(T& value) : value_{value} {}
 
     T& value_;
 };
+
+template <size_t N, size_t M, typename T, typename V>
+T operator+(const IndexableScalar<N, T>& left, const IndexableScalar<M, V>& right)
+{
+    return static_cast<T>(left) + static_cast<V>(right);
+}
 
 template <size_t N, typename T = double>
 class IndexableScalarConst
@@ -120,6 +131,12 @@ class IndexableScalarConst
 
     const T& value_;
 };
+
+template <size_t N, size_t M, typename T, typename V>
+T operator+(const IndexableScalarConst<N, T>& left, const IndexableScalarConst<M, V>& right)
+{
+    return static_cast<T>(left) + static_cast<V>(right);
+}
 
 template <size_t N, size_t M, typename T>
 class TransposedMatrixImpl : public Matrix<N, M, TransposedMatrixImpl<N, M, T>, T>
