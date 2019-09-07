@@ -37,7 +37,7 @@ class Matrix
     {
         for (size_t i = 0; i < N; ++i)
         {
-            for (size_t j = 0; j < N; ++j)
+            for (size_t j = 0; j < M; ++j)
             {
                 matrix_[i][j] = list[i][j];
             }

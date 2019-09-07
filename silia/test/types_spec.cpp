@@ -46,9 +46,9 @@ TEST(Types, Vector_OperatorAt)
     EXPECT_EQ(1, vector[1]);
 }
 
-TEST(Types, MakeMatrixFromArray)
+TEST(Types, MakeMatrixFromArray3x2)
 {
-    auto matrix = MakeMatrix<3, 2, int>({{0, 1}, {2, 3}, {4, 5}});
+    auto matrix = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
 
     static_assert(std::is_same<decltype(matrix), Matrix<3, 2, detail::MatrixImpl<3, 2, int>, int>>::value);
     EXPECT_EQ(0, matrix[0][0]);
@@ -57,6 +57,15 @@ TEST(Types, MakeMatrixFromArray)
     EXPECT_EQ(3, matrix[1][1]);
     EXPECT_EQ(4, matrix[2][0]);
     EXPECT_EQ(5, matrix[2][1]);
+}
+
+TEST(Types, MakeMatrixFromArray1x2)
+{
+    auto matrix = MakeMatrix({{3, 2}});
+
+    static_assert(std::is_same<decltype(matrix), Matrix<1, 2, detail::MatrixImpl<1, 2, int>, int>>::value);
+    EXPECT_EQ(3, matrix[0][0]);
+    EXPECT_EQ(2, matrix[0][1]);
 }
 
 TEST(Types, MakeVectorFromArray)
