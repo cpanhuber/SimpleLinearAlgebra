@@ -25,7 +25,7 @@ cc_library(
 
 cc_test(
     name = "types_spec",
-    srcs = ["test/types_spec.cpp"],
+    srcs = glob(["test/types/*.cpp"]),
     deps = [
         "@gtest//:gtest_main",
         ":silia_types_lib",
@@ -34,7 +34,7 @@ cc_test(
 
 cc_test(
     name = "operations_spec",
-    srcs = ["test/operations_spec.cpp"],
+    srcs = ["test/operations/operations_spec.cpp"],
     deps = [
         "@gtest//:gtest_main",
         ":silia_operations_lib",
