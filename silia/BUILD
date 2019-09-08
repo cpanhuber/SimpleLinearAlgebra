@@ -14,6 +14,7 @@ cc_library(
     hdrs = glob(
         [
             "include/silia/operations/*.h",
+            "include/silia/operations/detail/*.h",
         ],
     ),
     strip_include_prefix = "include/",

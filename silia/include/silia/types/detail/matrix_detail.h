@@ -151,7 +151,7 @@ class TransposedMatrixImpl
         return IndexSwap<M, N, T>(matrix_, index);
     }
 
-    IndexSwap<N, M, T> operator[](index_type index) const
+    IndexSwap<M, N, T> operator[](index_type index) const
     {
         return IndexSwap<M, N, T>(matrix_, index);
     }

@@ -88,6 +88,30 @@ TEST(Operations, CopylessTranspose_WhenVector)
     EXPECT_EQ(&(v[0][0]), &(v.TransposedView()[0][0]));
 }
 
+TEST(Operations, Multiplication_WhenTransposedViewLeft)
+{
+    auto m1 = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
+    auto m2 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
+
+    auto m3 = m1.TransposedView() * m2;
+    EXPECT_EQ(10, m3[0][0]);
+    EXPECT_EQ(19, m3[0][1]);
+    EXPECT_EQ(4, m3[1][0]);
+    EXPECT_EQ(10, m3[1][1]);
+}
+
+TEST(Operations, Multiplication_WhenTransposedViewRight)
+{
+    auto m1 = MakeMatrix({{5, 4, 3}, {2, 1, 0}});
+    auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    auto m3 = m1 * m2.TransposedView();
+    EXPECT_EQ(10, m3[0][0]);
+    EXPECT_EQ(46, m3[0][1]);
+    EXPECT_EQ(1, m3[1][0]);
+    EXPECT_EQ(10, m3[1][1]);
+}
+
 }  // namespace
 
 }  // namespace silia
