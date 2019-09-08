@@ -112,6 +112,18 @@ TEST(Operations, Multiplication_WhenTransposedViewRight)
     EXPECT_EQ(10, m3[1][1]);
 }
 
+TEST(Operations, Multiplication_WhenTransposedViewLeftVectorRight)
+{
+    auto m = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
+    auto v1 = MakeVector({0, 1, 2});
+
+    auto v2 = m.TransposedView() * v1;
+
+    static_assert(std::is_same<decltype(v2), Vector<2, int>>::value);
+    EXPECT_EQ(5, v2[0]);
+    EXPECT_EQ(2, v2[1]);
+}
+
 }  // namespace
 
 }  // namespace silia

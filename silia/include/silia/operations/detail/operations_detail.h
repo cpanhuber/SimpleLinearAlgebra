@@ -28,6 +28,7 @@ V MultiplyImpl(T const& left, U const& right)
 
     return result;
 }
+
 }  // namespace detail
 
 }  // namespace silia

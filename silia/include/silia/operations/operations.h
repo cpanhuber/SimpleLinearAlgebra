@@ -51,17 +51,15 @@ Matrix<I, K, T> operator*(detail::TransposedMatrixImpl<I, J, T> const& left,
 template <size_t I, size_t J, typename T, typename MatrixTypeLeft>
 Vector<I, T> operator*(MatrixType<I, J, MatrixTypeLeft, T> const& left, Vector<J, T> const& right)
 {
-    auto result = MakeVector<I, T>();
-    for (size_t i = 0; i < I; ++i)
-    {
-        result[i] = T{};
-        for (size_t j = 0; j < J; ++j)
-        {
-            result[i] += left[i][j] * right[j];
-        }
-    }
+    return detail::MultiplyImpl<I, J, 1, MatrixType<I, J, MatrixTypeLeft, T>, Vector<J, T>, Vector<I, T>, T>(left,
+                                                                                                             right);
+}
 
-    return result;
+template <size_t I, size_t J, typename T>
+Vector<I, T> operator*(detail::TransposedMatrixImpl<I, J, T> const& left, Vector<J, T> const& right)
+{
+    return detail::MultiplyImpl<I, J, 1, detail::TransposedMatrixImpl<I, J, T>, Vector<J, T>, Vector<I, T>, T>(left,
+                                                                                                               right);
 }
 
 template <size_t N, typename T>
