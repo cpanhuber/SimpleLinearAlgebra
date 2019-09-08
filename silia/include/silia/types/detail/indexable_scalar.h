@@ -77,18 +77,6 @@ class IndexableScalarConst
     const T& value_;
 };
 
-template <size_t N, size_t M, typename T, typename V>
-T operator+(const IndexableScalarConst<N, T>& left, const IndexableScalarConst<M, V>& right)
-{
-    return static_cast<T>(left) + static_cast<V>(right);
-}
-
-template <size_t N, size_t M, typename T, typename V>
-T operator+(const IndexableScalar<N, T>& left, const IndexableScalar<M, V>& right)
-{
-    return static_cast<T>(left) + static_cast<V>(right);
-}
-
 }  // namespace detail
 }  // namespace silia
 #endif  //  SILIA__TYPES__DETAIL__INDEXABLE_SCALAR_H
