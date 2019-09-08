@@ -22,13 +22,19 @@ class MatrixImpl;
 }  // namespace detail
 
 template <size_t N, size_t M, typename T, typename V = double>
-class Matrix;
+class MatrixType;
 
 template <size_t N, size_t M, typename T = double>
-Matrix<N, M, detail::MatrixImpl<N, M, T>, T> MakeMatrix();
+using Matrix = MatrixType<N, M, detail::MatrixImpl<N, M, T>, T>;
 
 template <size_t N, typename T = double>
-Matrix<N, 1, detail::VectorImpl<N, T>, T> MakeVector();
+using Vector = MatrixType<N, 1, detail::VectorImpl<N, T>, T>;
+
+template <size_t N, size_t M, typename T = double>
+Matrix<N, M, T> MakeMatrix();
+
+template <size_t N, typename T = double>
+Vector<N, T> MakeVector();
 
 namespace detail
 {
@@ -143,8 +149,8 @@ class TransposedMatrixImpl
 {
   public:
     using index_type = size_t;
-    friend Matrix<M, 1, detail::VectorImpl<M, T>, T>;
-    friend Matrix<M, N, detail::MatrixImpl<M, N, T>, T>;
+    friend Vector<M, T>;
+    friend Matrix<M, N, T>;
 
     IndexSwap<M, N, T> operator[](index_type index)
     {
@@ -162,10 +168,10 @@ class TransposedMatrixImpl
 };
 
 template <size_t N, typename T>
-class VectorImpl : public Matrix<N, 1, VectorImpl<N, T>, T>
+class VectorImpl : public Vector<N, T>
 {
   public:
-    using BaseType = Matrix<N, 1, VectorImpl<N, T>, T>;
+    using BaseType = Vector<N, T>;
     using ValueType = T;
 
     VectorImpl(T const (&list)[N])
@@ -189,16 +195,16 @@ class VectorImpl : public Matrix<N, 1, VectorImpl<N, T>, T>
   private:
     VectorImpl() {}
 
-    friend Matrix<N, 1, VectorImpl<N, T>, T> MakeVector<N, T>();
+    friend Vector<N, T> MakeVector<N, T>();
 };
 
 template <size_t N, size_t M, typename T>
-class MatrixImpl : public Matrix<N, M, MatrixImpl<N, M, T>, T>
+class MatrixImpl : public Matrix<N, M, T>
 {
   public:
-    using BaseType = Matrix<N, M, MatrixImpl<N, M, T>, T>;
+    using BaseType = Matrix<N, M, T>;
     using ValueType = std::array<T, M>;
-    using BaseType::Matrix;
+    using BaseType::MatrixType;
 
     std::array<T, M>& operator[](typename BaseType::index_type index)
     {
@@ -213,7 +219,7 @@ class MatrixImpl : public Matrix<N, M, MatrixImpl<N, M, T>, T>
   private:
     MatrixImpl() {}
 
-    friend Matrix<N, M, MatrixImpl<N, M, T>, T> MakeMatrix<N, M, T>();
+    friend Matrix<N, M, T> MakeMatrix<N, M, T>();
 };
 }  // namespace detail
 

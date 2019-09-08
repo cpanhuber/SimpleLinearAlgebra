@@ -10,7 +10,7 @@ namespace silia
 {
 
 template <size_t N, size_t M, typename Derived, typename V>
-class Matrix
+class MatrixType
 {
   public:
     using index_type = size_t;
@@ -38,7 +38,7 @@ class Matrix
         return detail::TransposedMatrixImpl<M, N, V>(matrix_);
     }
 
-    Matrix(V const (&list)[N][M]) : matrix_{}
+    MatrixType(V const (&list)[N][M]) : matrix_{}
     {
         for (size_t i = 0; i < N; ++i)
         {
@@ -49,7 +49,7 @@ class Matrix
         }
     }
 
-    Matrix() : matrix_{} {}
+    MatrixType() : matrix_{} {}
 
   protected:
     detail::RawMatrix<N, M, V> matrix_;

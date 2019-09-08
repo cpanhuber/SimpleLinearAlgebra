@@ -19,7 +19,7 @@ TEST(Operations, Multiplication_WhenMatrixMatrix)
 
     auto m3 = m1 * m2;
 
-    static_assert(std::is_same<decltype(m3), Matrix<3, 2, detail::MatrixImpl<3, 2, int>, int>>::value);
+    static_assert(std::is_same<decltype(m3), Matrix<3, 2, int>>::value);
     EXPECT_EQ(2, m3[0][0]);
     EXPECT_EQ(3, m3[0][1]);
     EXPECT_EQ(6, m3[1][0]);
@@ -35,7 +35,7 @@ TEST(Operations, Multiplication_WhenVectorMatrix)
 
     auto m2 = v * m1;
 
-    static_assert(std::is_same<decltype(m2), Matrix<2, 2, detail::MatrixImpl<2, 2, int>, int>>::value);
+    static_assert(std::is_same<decltype(m2), Matrix<2, 2, int>>::value);
     EXPECT_EQ(6, m2[0][0]);
     EXPECT_EQ(4, m2[0][1]);
     EXPECT_EQ(3, m2[1][0]);
@@ -49,7 +49,7 @@ TEST(Operations, Multiplication_WhenMatrixVector)
 
     auto v2 = m * v1;
 
-    static_assert(std::is_same<decltype(v2), Matrix<2, 1, detail::VectorImpl<2, int>, int>>::value);
+    static_assert(std::is_same<decltype(v2), Vector<2, int>>::value);
     EXPECT_EQ(11, v2[0]);
     EXPECT_EQ(4, v2[1]);
 }
