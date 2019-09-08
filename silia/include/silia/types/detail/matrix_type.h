@@ -1,12 +1,15 @@
-#ifndef SILIA__TYPES__MATRIX_H
-#define SILIA__TYPES__MATRIX_H
+#ifndef SILIA__TYPES__DETAIL_MATRIX_TYPE_H
+#define SILIA__TYPES__DETAIL_MATRIX_TYPE_H
 
-#include <silia/types/detail/matrix_detail.h>
+#include <silia/types/detail/transposed_matrix_impl.h>
 
 #include <cstddef>
 #include <type_traits>
 
 namespace silia
+{
+
+namespace detail
 {
 
 template <size_t N, size_t M, typename Derived, typename V>
@@ -55,6 +58,8 @@ class MatrixType
     detail::RawMatrix<N, M, V> matrix_;
 };
 
+}  // namespace detail
+
 }  // namespace silia
 
-#endif  // SILIA__TYPES__MATRIX_H
+#endif  // SILIA__TYPES__DETAIL__MATRIX_TYPE_H

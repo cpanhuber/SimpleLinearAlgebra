@@ -1,14 +1,12 @@
-#ifndef SILIA__TYPES__DETAIL__MATRIX_DETAIL_H
-#define SILIA__TYPES__DETAIL__MATRIX_DETAIL_H
+#ifndef SILIA__TYPES__DETAIL__VECTOR_IMPL_H
+#define SILIA__TYPES__DETAIL__VECTOR_IMPL_H
 
-#include <array>
-#include <cassert>
-#include <memory>
+#include <silia/types/detail/factory_fwd.h>
+#include <silia/types/detail/indexable_scalar.h>
+#include <silia/types/detail/types_fwd.h>
 
 namespace silia
 {
-template <size_t N, size_t M, typename T = double>
-Matrix<N, M, T> MakeMatrix();
 
 template <size_t N, typename T = double>
 Vector<N, T> MakeVector();
@@ -47,31 +45,8 @@ class VectorImpl : public Vector<N, T>
     friend Vector<N, T> MakeVector<N, T>();
 };
 
-template <size_t N, size_t M, typename T>
-class MatrixImpl : public Matrix<N, M, T>
-{
-  public:
-    using BaseType = Matrix<N, M, T>;
-    using ValueType = std::array<T, M>;
-    using BaseType::MatrixType;
-
-    std::array<T, M>& operator[](typename BaseType::index_type index)
-    {
-        return BaseType::matrix_[index];
-    }
-
-    std::array<T, M> const& operator[](typename BaseType::index_type index) const
-    {
-        return BaseType::matrix_[index];
-    }
-
-  private:
-    MatrixImpl() {}
-
-    friend Matrix<N, M, T> MakeMatrix<N, M, T>();
-};
 }  // namespace detail
 
 }  // namespace silia
 
-#endif  // SILIA__TYPES__DETAIL__MATRIX_DETAIL_H
+#endif  // SILIA__TYPES__DETAIL__VECTOR_IMPL_H
