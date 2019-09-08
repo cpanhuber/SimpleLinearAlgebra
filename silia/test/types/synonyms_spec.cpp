@@ -66,6 +66,61 @@ TEST(Synonyms, Synonym_Matrix2i)
     SUCCEED();
 }
 
+TEST(Synonyms, Synonym_Vector4d)
+{
+    Vector4d m{};
+    static_assert(std::is_same<decltype(m), Vector<4, double>>::value);
+    SUCCEED();
+}
+TEST(Synonyms, Synonym_Vector4f)
+{
+    Vector4f m{};
+    static_assert(std::is_same<decltype(m), Vector<4, float>>::value);
+    SUCCEED();
+}
+TEST(Synonyms, Synonym_Vector4i)
+{
+    Vector4i m{};
+    static_assert(std::is_same<decltype(m), Vector<4, int>>::value);
+    SUCCEED();
+}
+TEST(Synonyms, Synonym_Vector3d)
+{
+    Vector3d m{};
+    static_assert(std::is_same<decltype(m), Vector<3, double>>::value);
+    SUCCEED();
+}
+TEST(Synonyms, Synonym_Vector3f)
+{
+    Vector3f m{};
+    static_assert(std::is_same<decltype(m), Vector<3, float>>::value);
+    SUCCEED();
+}
+TEST(Synonyms, Synonym_Vector3i)
+{
+    Vector3i m{};
+    static_assert(std::is_same<decltype(m), Vector<3, int>>::value);
+    SUCCEED();
+}
+TEST(Synonyms, Synonym_Vector2d)
+{
+    Vector2d m{};
+    static_assert(std::is_same<decltype(m), Vector<2, double>>::value);
+    SUCCEED();
+}
+TEST(Synonyms, Synonym_Vector2f)
+{
+    Vector2f m{};
+    static_assert(std::is_same<decltype(m), Vector<2, float>>::value);
+    SUCCEED();
+}
+TEST(Synonyms, Synonym_Vector2i)
+{
+    Vector2i m{};
+    static_assert(std::is_same<decltype(m), Vector<2, int>>::value);
+    SUCCEED();
+}
+
 }  // namespace
 
 }  // namespace silia
