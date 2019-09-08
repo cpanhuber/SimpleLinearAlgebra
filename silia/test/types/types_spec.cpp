@@ -34,7 +34,7 @@ TEST(Types, Vector_OperatorAt)
     EXPECT_EQ(1, vector[1]);
 }
 
-TEST(Operations, CopylessTranspose_WhenMatrix)
+TEST(Types, CopylessTranspose_WhenMatrix)
 {
     auto m = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
 
@@ -47,7 +47,7 @@ TEST(Operations, CopylessTranspose_WhenMatrix)
     EXPECT_EQ(&(m[0][0]), &(m.TransposedView()[0][0]));
 }
 
-TEST(Operations, CopylessTranspose_WhenVector)
+TEST(Types, CopylessTranspose_WhenVector)
 {
     auto v = MakeVector({5, 4, 3});
 

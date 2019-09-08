@@ -34,7 +34,7 @@ cc_test(
 
 cc_test(
     name = "operations_spec",
-    srcs = ["test/operations/operations_spec.cpp"],
+    srcs = glob(["test/operations/*.cpp"]),
     deps = [
         "@gtest//:gtest_main",
         ":silia_operations_lib",

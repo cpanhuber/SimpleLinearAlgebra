@@ -11,19 +11,19 @@ namespace
 {
 using namespace testing;
 
-TEST(Types, MakeMatrix)
+TEST(Factories, MakeMatrix)
 {
     auto matrix = MakeMatrix<3, 4, double>();
     static_assert(std::is_same<decltype(matrix), Matrix<3, 4, double>>::value);
 }
 
-TEST(Types, MakeVector)
+TEST(Factories, MakeVector)
 {
     auto vector = MakeVector<3, double>();
     static_assert(std::is_same<decltype(vector), Vector<3, double>>::value);
 }
 
-TEST(Types, MakeMatrixFromArray3x2)
+TEST(Factories, MakeMatrixFromArray3x2)
 {
     auto matrix = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
 
@@ -36,7 +36,7 @@ TEST(Types, MakeMatrixFromArray3x2)
     EXPECT_EQ(5, matrix[2][1]);
 }
 
-TEST(Types, MakeMatrixFromArray1x2)
+TEST(Factories, MakeMatrixFromArray1x2)
 {
     auto matrix = MakeMatrix({{3, 2}});
 
@@ -45,7 +45,7 @@ TEST(Types, MakeMatrixFromArray1x2)
     EXPECT_EQ(2, matrix[0][1]);
 }
 
-TEST(Types, MakeVectorFromArray)
+TEST(Factories, MakeVectorFromArray)
 {
     auto vector = MakeVector<3, int>({0, 1, 2});
 
