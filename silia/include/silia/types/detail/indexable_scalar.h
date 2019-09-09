@@ -41,11 +41,6 @@ class IndexableScalar
         value_ = value;
     }
 
-    void operator+=(const T& value)
-    {
-        value_ += value;
-    }
-
   private:
     IndexableScalar(T& value) : value_{value} {}
 
