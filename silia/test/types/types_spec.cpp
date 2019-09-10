@@ -70,6 +70,20 @@ TEST(Types, CopylessTranspose_WhenVector)
     EXPECT_EQ(&(v[0][0]), &(v.TransposedView()[0][0]));
 }
 
+TEST(Types, CopyConstructTransposedToMatrix)
+{
+    Matrix<2, 3, int> m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    Matrix<3, 2, int> m1 = m2.TransposedView();
+
+    EXPECT_EQ(0, m1[0][0]);
+    EXPECT_EQ(3, m1[0][1]);
+    EXPECT_EQ(1, m1[1][0]);
+    EXPECT_EQ(4, m1[1][1]);
+    EXPECT_EQ(2, m1[2][0]);
+    EXPECT_EQ(5, m1[2][1]);
+}
+
 TEST(Types, CopyAssignTransposedToMatrix)
 {
     Matrix<3, 2, int> m1 = MakeMatrix({{0, 0}, {0, 0}, {0, 0}});

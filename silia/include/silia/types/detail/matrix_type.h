@@ -1,6 +1,7 @@
 #ifndef SILIA__TYPES__DETAIL_MATRIX_TYPE_H
 #define SILIA__TYPES__DETAIL_MATRIX_TYPE_H
 
+#include <silia/types/detail/member_operations/copy.h>
 #include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
 #include <silia/types/detail/transposed_matrix_impl.h>
 
@@ -59,15 +60,14 @@ class MatrixType
         }
     }
 
+    MatrixType(TransposedMatrixImpl<N, M, V> const& other) : matrix_{}
+    {
+        Copy<N, M, TransposedMatrixImpl<N, M, V>, detail::RawMatrix<N, M, V>, V>(other, matrix_);
+    }
+
     MatrixType& operator=(TransposedMatrixImpl<N, M, V> const& other)
     {
-        for (size_t i = 0; i < N; ++i)
-        {
-            for (size_t j = 0; j < M; ++j)
-            {
-                matrix_[i][j] = other[i][j];
-            }
-        }
+        Copy<N, M, TransposedMatrixImpl<N, M, V>, detail::RawMatrix<N, M, V>, V>(other, matrix_);
         return *this;
     }
 
