@@ -1,6 +1,7 @@
 #ifndef SILIA__TYPES__DETAIL_MATRIX_TYPE_H
 #define SILIA__TYPES__DETAIL_MATRIX_TYPE_H
 
+#include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
 #include <silia/types/detail/transposed_matrix_impl.h>
 
 #include <cstddef>
@@ -43,14 +44,7 @@ class MatrixType
 
     MatrixType& operator*=(V const& factor)
     {
-        V result{};
-        for (size_t i = 0; i < N; ++i)
-        {
-            for (size_t j = 0; j < M; ++j)
-            {
-                matrix_[i][j] *= factor;
-            }
-        }
+        ScalarMultiplyAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, factor);
         return *this;
     }
 

@@ -4,6 +4,7 @@ cc_library(
         [
             "include/silia/types/*.h",
             "include/silia/types/detail/*.h",
+            "include/silia/types/detail/member_operations/*.h",
         ],
     ),
     strip_include_prefix = "include/",

@@ -2,6 +2,7 @@
 #define SILIA__TYPES__DETAIL__TRANSPOSED_MATRIX_IMPL_H
 
 #include <silia/types/detail/index_swap.h>
+#include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
 #include <silia/types/detail/raw_matrix.h>
 #include <silia/types/detail/types_fwd.h>
 
@@ -31,14 +32,7 @@ class TransposedMatrixImpl
 
     TransposedMatrixImpl& operator*=(T const& factor)
     {
-        T result{};
-        for (size_t i = 0; i < M; ++i)
-        {
-            for (size_t j = 0; j < N; ++j)
-            {
-                matrix_[i][j] *= factor;
-            }
-        }
+        ScalarMultiplyAssignImpl<M, N, RawMatrix<M, N, T>, T>(matrix_, factor);
         return *this;
     }
 
