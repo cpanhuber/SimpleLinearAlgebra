@@ -1,7 +1,6 @@
 #ifndef SILIA__OPERATIONS__SCALAR_MULTIPLICATION_H
 #define SILIA__OPERATIONS__SCALAR_MULTIPLICATION_H
 
-#include <silia/operations/detail/scalar_multiplication_detail.h>
 #include <silia/types/types.h>
 
 #include <array>
@@ -19,7 +18,9 @@ detail::MatrixType<I, J, MatrixType, T> operator*(detail::MatrixType<I, J, Matri
 template <size_t I, size_t J, typename T>
 Matrix<I, J, T> operator*(detail::TransposedMatrixImpl<I, J, T> const& left, T const& right)
 {
-    return detail::ScalarMultiplyImpl<I, J, T, detail::TransposedMatrixImpl<I, J, T>, Matrix<I, J, T>>(left, right);
+    Matrix<I, J, T> m = left;
+    m *= right;
+    return m;
 }
 
 template <size_t I, size_t J, typename T, typename MatrixType>
@@ -32,7 +33,9 @@ detail::MatrixType<I, J, MatrixType, T> operator*(T const& left, detail::MatrixT
 template <size_t I, size_t J, typename T>
 Matrix<I, J, T> operator*(T const& left, detail::TransposedMatrixImpl<I, J, T> const& right)
 {
-    return detail::ScalarMultiplyImpl<I, J, T, detail::TransposedMatrixImpl<I, J, T>, Matrix<I, J, T>>(right, left);
+    Matrix<I, J, T> m = right;
+    m *= left;
+    return m;
 }
 
 }  // namespace silia
