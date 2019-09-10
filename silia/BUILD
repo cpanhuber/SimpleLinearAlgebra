@@ -7,6 +7,7 @@ cc_library(
             "include/silia/types/detail/member_operations/*.h",
         ],
     ),
+    copts = ["-Wall", "-Werror", "--pedantic"],
     strip_include_prefix = "include/",
 )
 
@@ -18,6 +19,7 @@ cc_library(
             "include/silia/operations/detail/*.h",
         ],
     ),
+    copts = ["-Wall", "-Werror", "--pedantic"],
     strip_include_prefix = "include/",
     deps = [
         ":silia_types_lib",
@@ -31,6 +33,7 @@ cc_test(
         "@gtest//:gtest_main",
         ":silia_types_lib",
     ],
+    copts = ["-Wall", "-Werror", "--pedantic"],
 )
 
 cc_test(
@@ -40,4 +43,5 @@ cc_test(
         "@gtest//:gtest_main",
         ":silia_operations_lib",
     ],
+    copts = ["-Wall", "-Werror", "--pedantic"],
 )

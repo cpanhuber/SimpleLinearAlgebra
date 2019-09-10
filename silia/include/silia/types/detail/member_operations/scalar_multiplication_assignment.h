@@ -11,9 +11,9 @@ namespace detail
 template <size_t N, size_t M, typename MatrixLike, typename T>
 void ScalarMultiplyAssignImpl(MatrixLike& matrix, T const& factor)
 {
-    for (int i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
     {
-        for (int j = 0; j < M; j++)
+        for (size_t j = 0; j < M; j++)
         {
             matrix[i][j] *= factor;
         }

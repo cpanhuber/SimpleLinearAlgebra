@@ -19,7 +19,7 @@ TEST(Multiplication, Multiplication_WhenMatrixMatrix)
 
     auto m3 = m1 * m2;
 
-    static_assert(std::is_same<decltype(m3), Matrix<3, 2, int>>::value);
+    static_assert(std::is_same<decltype(m3), Matrix<3, 2, int>>::value, "matrix multiplication type check failed");
     EXPECT_EQ(2, m3[0][0]);
     EXPECT_EQ(3, m3[0][1]);
     EXPECT_EQ(6, m3[1][0]);
@@ -35,7 +35,7 @@ TEST(Multiplication, Multiplication_WhenVectorMatrix)
 
     auto m2 = v * m1;
 
-    static_assert(std::is_same<decltype(m2), Matrix<2, 2, int>>::value);
+    static_assert(std::is_same<decltype(m2), Matrix<2, 2, int>>::value, "matrix multiplication type check failed");
     EXPECT_EQ(6, m2[0][0]);
     EXPECT_EQ(4, m2[0][1]);
     EXPECT_EQ(3, m2[1][0]);
@@ -49,7 +49,7 @@ TEST(Multiplication, Multiplication_WhenMatrixVector)
 
     auto v2 = m * v1;
 
-    static_assert(std::is_same<decltype(v2), Vector<2, int>>::value);
+    static_assert(std::is_same<decltype(v2), Vector<2, int>>::value, "matrix multiplication type check failed");
     EXPECT_EQ(11, v2[0]);
     EXPECT_EQ(4, v2[1]);
 }
@@ -61,7 +61,7 @@ TEST(Multiplication, Multiplication_WhenVectorDotProduct)
 
     auto v3 = v1 * v2;
 
-    static_assert(std::is_same<decltype(v3), int>::value);
+    static_assert(std::is_same<decltype(v3), int>::value, "dot product type check failed");
     EXPECT_EQ(8, v3);
 }
 
@@ -96,7 +96,7 @@ TEST(Multiplication, Multiplication_WhenTransposedViewLeftVectorRight)
 
     auto v2 = m.TransposedView() * v1;
 
-    static_assert(std::is_same<decltype(v2), Vector<2, int>>::value);
+    static_assert(std::is_same<decltype(v2), Vector<2, int>>::value, "Matrix multiplication type check failed");
     EXPECT_EQ(5, v2[0]);
     EXPECT_EQ(2, v2[1]);
 }

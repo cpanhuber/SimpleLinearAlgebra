@@ -14,20 +14,20 @@ using namespace testing;
 TEST(Factories, MakeMatrix)
 {
     auto matrix = MakeMatrix<3, 4, double>();
-    static_assert(std::is_same<decltype(matrix), Matrix<3, 4, double>>::value);
+    static_assert(std::is_same<decltype(matrix), Matrix<3, 4, double>>::value, "type from factory invalid");
 }
 
 TEST(Factories, MakeVector)
 {
     auto vector = MakeVector<3, double>();
-    static_assert(std::is_same<decltype(vector), Vector<3, double>>::value);
+    static_assert(std::is_same<decltype(vector), Vector<3, double>>::value, "type from factory invalid");
 }
 
 TEST(Factories, MakeMatrixFromArray3x2)
 {
     auto matrix = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
 
-    static_assert(std::is_same<decltype(matrix), Matrix<3, 2, int>>::value);
+    static_assert(std::is_same<decltype(matrix), Matrix<3, 2, int>>::value, "type from factory invalid");
     EXPECT_EQ(0, matrix[0][0]);
     EXPECT_EQ(1, matrix[0][1]);
     EXPECT_EQ(2, matrix[1][0]);
@@ -40,7 +40,7 @@ TEST(Factories, MakeMatrixFromArray1x2)
 {
     auto matrix = MakeMatrix({{3, 2}});
 
-    static_assert(std::is_same<decltype(matrix), Matrix<1, 2, int>>::value);
+    static_assert(std::is_same<decltype(matrix), Matrix<1, 2, int>>::value, "type from factory invalid");
     EXPECT_EQ(3, matrix[0][0]);
     EXPECT_EQ(2, matrix[0][1]);
 }
@@ -49,7 +49,7 @@ TEST(Factories, MakeVectorFromArray)
 {
     auto vector = MakeVector<3, int>({0, 1, 2});
 
-    static_assert(std::is_same<decltype(vector), Vector<3, int>>::value);
+    static_assert(std::is_same<decltype(vector), Vector<3, int>>::value, "type from factory invalid");
     EXPECT_EQ(0, vector[0]);
     EXPECT_EQ(1, vector[1]);
     EXPECT_EQ(2, vector[2]);

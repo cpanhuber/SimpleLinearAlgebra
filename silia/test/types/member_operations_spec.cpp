@@ -19,7 +19,7 @@ TEST(ScalarMultiplicationAssignment, MatixWithScalarAssignment)
 
     m1 *= factor;
 
-    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value);
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(0, m1[0][0]);
     EXPECT_EQ(2, m1[0][1]);
     EXPECT_EQ(4, m1[1][0]);
@@ -35,7 +35,7 @@ TEST(ScalarMultiplicationAssignment, VectorWithScalarAssignment)
 
     v1 *= factor;
 
-    static_assert(std::is_same<decltype(v1), Vector<3, int>>::value);
+    static_assert(std::is_same<decltype(v1), Vector<3, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(0, v1[0][0]);
     EXPECT_EQ(2, v1[1][0]);
     EXPECT_EQ(4, v1[2][0]);
@@ -48,7 +48,7 @@ TEST(ScalarMultiplicationAssignment, TransposedWithScalarAssignment)
 
     m1.TransposedView() *= factor;
 
-    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value);
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(0, m1[0][0]);
     EXPECT_EQ(2, m1[0][1]);
     EXPECT_EQ(4, m1[1][0]);

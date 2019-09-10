@@ -40,7 +40,7 @@ TEST(IndexableScalar, AutoCastToT_WhenArithmethic)
 
     auto c = a + b;
 
-    static_assert(std::is_same<decltype(c), int>::value);
+    static_assert(std::is_same<decltype(c), int>::value, "auto cast to value yielded unexpected type");
     EXPECT_EQ(3, c);
 }
 
