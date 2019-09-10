@@ -59,6 +59,18 @@ class MatrixType
         }
     }
 
+    MatrixType& operator=(TransposedMatrixImpl<N, M, V> const& other)
+    {
+        for (size_t i = 0; i < N; ++i)
+        {
+            for (size_t j = 0; j < M; ++j)
+            {
+                matrix_[i][j] = other[i][j];
+            }
+        }
+        return *this;
+    }
+
     MatrixType() : matrix_{} {}
 
   protected:

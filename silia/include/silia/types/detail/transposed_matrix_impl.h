@@ -19,6 +19,7 @@ class TransposedMatrixImpl
     using index_type = size_t;
     friend Vector<M, T>;
     friend Matrix<M, N, T>;
+    friend Matrix<N, M, T>;
 
     IndexSwap<M, N, T> operator[](index_type index)
     {
