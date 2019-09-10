@@ -29,6 +29,19 @@ class TransposedMatrixImpl
         return IndexSwap<M, N, T>(matrix_, index);
     }
 
+    TransposedMatrixImpl& operator*=(T const& factor)
+    {
+        T result{};
+        for (size_t i = 0; i < M; ++i)
+        {
+            for (size_t j = 0; j < N; ++j)
+            {
+                matrix_[i][j] *= factor;
+            }
+        }
+        return *this;
+    }
+
   private:
     TransposedMatrixImpl(RawMatrix<M, N, T>& matrix) : matrix_{matrix} {}
     RawMatrix<M, N, T>& matrix_;

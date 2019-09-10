@@ -41,6 +41,19 @@ class MatrixType
         return detail::TransposedMatrixImpl<M, N, V>(matrix_);
     }
 
+    MatrixType& operator*=(V const& factor)
+    {
+        V result{};
+        for (size_t i = 0; i < N; ++i)
+        {
+            for (size_t j = 0; j < M; ++j)
+            {
+                matrix_[i][j] *= factor;
+            }
+        }
+        return *this;
+    }
+
     MatrixType(V const (&list)[N][M]) : matrix_{}
     {
         for (size_t i = 0; i < N; ++i)
