@@ -141,6 +141,51 @@ TEST(MatrixAdditionAssignment, VectorWithTransposed)
     EXPECT_EQ(6, v[2][0]);
 }
 
+TEST(MatrixAdditionAssignment, TransposedWithMatrix)
+{
+    auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
+    auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    m1.TransposedView() += m2;
+
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
+    EXPECT_EQ(0, m1[0][0]);
+    EXPECT_EQ(4, m1[0][1]);
+    EXPECT_EQ(3, m1[1][0]);
+    EXPECT_EQ(7, m1[1][1]);
+    EXPECT_EQ(6, m1[2][0]);
+    EXPECT_EQ(10, m1[2][1]);
+}
+
+TEST(MatrixAdditionAssignment, TransposedWithVector)
+{
+    auto m = MakeMatrix({{1, 2, 3}});
+    auto v = MakeVector({1, 2, 3});
+
+    m.TransposedView() += v;
+
+    static_assert(std::is_same<decltype(m), Matrix<1, 3, int>>::value, "addition assignment type check failed");
+    EXPECT_EQ(2, m[0][0]);
+    EXPECT_EQ(4, m[0][1]);
+    EXPECT_EQ(6, m[0][2]);
+}
+
+TEST(MatrixAdditionAssignment, TransposedWithTransposed)
+{
+    auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
+    auto m2 = MakeMatrix({{0, 3}, {1, 4}, {2, 5}});
+
+    m1.TransposedView() += m2.TransposedView();
+
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
+    EXPECT_EQ(0, m1[0][0]);
+    EXPECT_EQ(4, m1[0][1]);
+    EXPECT_EQ(3, m1[1][0]);
+    EXPECT_EQ(7, m1[1][1]);
+    EXPECT_EQ(6, m1[2][0]);
+    EXPECT_EQ(10, m1[2][1]);
+}
+
 }  // namespace
 
 }  // namespace silia

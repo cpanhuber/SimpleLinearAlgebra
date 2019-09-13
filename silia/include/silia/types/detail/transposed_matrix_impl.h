@@ -37,6 +37,20 @@ class TransposedMatrixImpl
         return *this;
     }
 
+    template <typename OtherDerived, typename V>
+    TransposedMatrixImpl& operator+=(MatrixType<N, M, OtherDerived, V> const& right)
+    {
+        MatrixAddAssignImpl<N, M, TransposedMatrixImpl<N, M, T>, MatrixType<N, M, OtherDerived, V>>(*this, right);
+        return *this;
+    }
+
+    template <typename V>
+    TransposedMatrixImpl& operator+=(TransposedMatrixImpl<N, M, V> const& right)
+    {
+        MatrixAddAssignImpl<N, M, TransposedMatrixImpl<N, M, T>, TransposedMatrixImpl<N, M, V>>(*this, right);
+        return *this;
+    }
+
   private:
     TransposedMatrixImpl(RawMatrix<M, N, T>& matrix) : matrix_{matrix} {}
     RawMatrix<M, N, T>& matrix_;
