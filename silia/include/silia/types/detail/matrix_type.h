@@ -4,6 +4,7 @@
 #include <silia/types/detail/member_operations/copy.h>
 #include <silia/types/detail/member_operations/matrix_addition_assignment.h>
 #include <silia/types/detail/member_operations/matrix_substraction_assignment.h>
+#include <silia/types/detail/member_operations/scalar_addition_assignment.h>
 #include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
 #include <silia/types/detail/transposed_matrix_impl.h>
 
@@ -48,6 +49,12 @@ class MatrixType
     MatrixType& operator*=(V const& factor)
     {
         ScalarMultiplyAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, factor);
+        return *this;
+    }
+
+    MatrixType& operator+=(V const& summand)
+    {
+        ScalarAddAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, summand);
         return *this;
     }
 

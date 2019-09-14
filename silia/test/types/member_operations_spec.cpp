@@ -57,6 +57,51 @@ TEST(ScalarMultiplicationAssignment, TransposedWithScalarAssignment)
     EXPECT_EQ(10, m1[2][1]);
 }
 
+TEST(ScalarAdditionAssignment, MatixWithScalarAssignment)
+{
+    auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
+    int summand = 2;
+
+    m1 += summand;
+
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "scalar multiplication type check failed");
+    EXPECT_EQ(2, m1[0][0]);
+    EXPECT_EQ(3, m1[0][1]);
+    EXPECT_EQ(4, m1[1][0]);
+    EXPECT_EQ(5, m1[1][1]);
+    EXPECT_EQ(6, m1[2][0]);
+    EXPECT_EQ(7, m1[2][1]);
+}
+
+TEST(ScalarAdditionAssignment, VectorWithScalarAssignment)
+{
+    auto v1 = MakeVector({0, 1, 2});
+    int summand = 2;
+
+    v1 += summand;
+
+    static_assert(std::is_same<decltype(v1), Vector<3, int>>::value, "scalar multiplication type check failed");
+    EXPECT_EQ(2, v1[0][0]);
+    EXPECT_EQ(3, v1[1][0]);
+    EXPECT_EQ(4, v1[2][0]);
+}
+
+TEST(ScalarAdditionAssignment, TransposedWithScalarAssignment)
+{
+    auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
+    int summand = 2;
+
+    m1.TransposedView() += summand;
+
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "scalar multiplication type check failed");
+    EXPECT_EQ(2, m1[0][0]);
+    EXPECT_EQ(3, m1[0][1]);
+    EXPECT_EQ(4, m1[1][0]);
+    EXPECT_EQ(5, m1[1][1]);
+    EXPECT_EQ(6, m1[2][0]);
+    EXPECT_EQ(7, m1[2][1]);
+}
+
 TEST(MatrixAdditionAssignment, MatrixWithMatrix)
 {
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
