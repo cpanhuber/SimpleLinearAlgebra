@@ -43,6 +43,12 @@ class TransposedMatrixImpl
         return *this;
     }
 
+    TransposedMatrixImpl& operator-=(T const& summand)
+    {
+        ScalarSubstractAssignImpl<M, N, RawMatrix<M, N, T>, T>(matrix_, summand);
+        return *this;
+    }
+
     template <typename OtherDerived, typename V>
     TransposedMatrixImpl& operator+=(MatrixType<N, M, OtherDerived, V> const& right)
     {

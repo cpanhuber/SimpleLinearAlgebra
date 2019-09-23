@@ -6,6 +6,7 @@
 #include <silia/types/detail/member_operations/matrix_substraction_assignment.h>
 #include <silia/types/detail/member_operations/scalar_addition_assignment.h>
 #include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
+#include <silia/types/detail/member_operations/scalar_substraction_assignment.h>
 #include <silia/types/detail/transposed_matrix_impl.h>
 
 #include <cstddef>
@@ -55,6 +56,12 @@ class MatrixType
     MatrixType& operator+=(V const& summand)
     {
         ScalarAddAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, summand);
+        return *this;
+    }
+
+    MatrixType& operator-=(V const& summand)
+    {
+        ScalarSubstractAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, summand);
         return *this;
     }
 
