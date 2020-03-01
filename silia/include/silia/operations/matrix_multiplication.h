@@ -1,7 +1,7 @@
 #ifndef SILIA__OPERATIONS__MATRIX_MULTIPLICATION_H
 #define SILIA__OPERATIONS__MATRIX_MULTIPLICATION_H
 
-#include <silia/operations/detail/multiplication_detail.h>
+#include <silia/operations/detail/matrix_multiplication_detail.h>
 #include <silia/types/types.h>
 
 #include <array>
