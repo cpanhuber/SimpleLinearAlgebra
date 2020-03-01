@@ -52,7 +52,7 @@ TEST(Substraction, Substraction_WhenMatrixVector)
     EXPECT_EQ(3, m2[1][0]);
 }
 
-TEST(Substraction, Addtion_WhenVectorVector)
+TEST(Substraction, Substraction_WhenVectorVector)
 {
     Vector3i v1 = MakeVector({2, 2, 1});
     Vector3i v2 = MakeVector({3, 4, 0});

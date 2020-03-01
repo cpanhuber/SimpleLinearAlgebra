@@ -52,7 +52,7 @@ TEST(Addition, Addition_WhenMatrixVector)
     EXPECT_EQ(3, m2[1][0]);
 }
 
-TEST(Addition, Addtion_WhenVectorVector)
+TEST(Addition, Addition_WhenVectorVector)
 {
     Vector3i v1 = MakeVector({3, 2, 1});
     Vector3i v2 = MakeVector({2, 1, 0});
