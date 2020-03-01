@@ -12,5 +12,6 @@
 #include <silia/operations/scalar_division.h>
 #include <silia/operations/scalar_multiplication.h>
 #include <silia/operations/scalar_substraction.h>
+#include <silia/operations/unit.h>
 
 #endif  // SILIA__OPERATIONS__OPERATIONS_H
