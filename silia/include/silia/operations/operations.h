@@ -2,6 +2,7 @@
 #define SILIA__OPERATIONS__OPERATIONS_H
 
 #include <silia/operations/elementwise_addition.h>
+#include <silia/operations/elementwise_division.h>
 #include <silia/operations/elementwise_multiplication.h>
 #include <silia/operations/elementwise_substraction.h>
 #include <silia/operations/matrix_multiplication.h>
