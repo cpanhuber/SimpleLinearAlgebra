@@ -1,5 +1,5 @@
-#ifndef SILIA__OPERATIONS__DETAIL__NORM_DETAIL_H
-#define SILIA__OPERATIONS__DETAIL__NORM_DETAIL_H
+#ifndef SILIA__OPERATIONS__DETAIL__SQUARED_NORM_DETAIL_H
+#define SILIA__OPERATIONS__DETAIL__SQUARED_NORM_DETAIL_H
 
 #include <silia/types/types.h>
 
@@ -26,4 +26,4 @@ W SquaredNormImpl(T const& vector_like)
 
 }  // namespace silia
 
-#endif  // SILIA__OPERATIONS__DETAIL__NORM_DETAIL_H
+#endif  // SILIA__OPERATIONS__DETAIL__SQUARED_NORM_DETAIL_H
