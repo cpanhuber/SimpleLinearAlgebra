@@ -1,5 +1,5 @@
-#ifndef SILIA__OPERATIONS__DETAIL__MULTIPLICATION_DETAIL_H
-#define SILIA__OPERATIONS__DETAIL__MULTIPLICATION_DETAIL_H
+#ifndef SILIA__OPERATIONS__DETAIL__MATRIX_MULTIPLICATION_DETAIL_H
+#define SILIA__OPERATIONS__DETAIL__MATRIX_MULTIPLICATION_DETAIL_H
 
 #include <silia/types/types.h>
 
@@ -11,7 +11,7 @@ namespace silia
 namespace detail
 {
 template <size_t I, size_t J, size_t K, typename T, typename U, typename V, typename W>
-V MultiplyImpl(T const& left, U const& right)
+V MatrixMultiplyImpl(T const& left, U const& right)
 {
     V result{};
     for (size_t i = 0; i < I; ++i)
@@ -33,4 +33,4 @@ V MultiplyImpl(T const& left, U const& right)
 
 }  // namespace silia
 
-#endif  // SILIA__OPERATIONS__DETAIL__MULTIPLICATION_DETAIL_H
+#endif  // SILIA__OPERATIONS__DETAIL__MATRIX_MULTIPLICATION_DETAIL_H

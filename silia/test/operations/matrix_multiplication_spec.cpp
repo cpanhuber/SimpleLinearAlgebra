@@ -12,7 +12,7 @@ namespace
 {
 using namespace testing;
 
-TEST(Multiplication, Multiplication_WhenMatrixMatrix)
+TEST(MatrixMultiplication, MatrixMultiplication_WhenMatrixMatrix)
 {
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 1}, {2, 3}});
@@ -28,7 +28,7 @@ TEST(Multiplication, Multiplication_WhenMatrixMatrix)
     EXPECT_EQ(19, m3[2][1]);
 }
 
-TEST(Multiplication, Multiplication_WhenVectorMatrix)
+TEST(MatrixMultiplication, MatrixMultiplication_WhenVectorMatrix)
 {
     Vector2i v = MakeVector({2, 1});
     auto m1 = MakeMatrix({{3, 2}});
@@ -42,7 +42,7 @@ TEST(Multiplication, Multiplication_WhenVectorMatrix)
     EXPECT_EQ(2, m2[1][1]);
 }
 
-TEST(Multiplication, Multiplication_WhenMatrixVector)
+TEST(MatrixMultiplication, MatrixMultiplication_WhenMatrixVector)
 {
     Vector2i v1 = MakeVector({2, 1});
     auto m = MakeMatrix({{4, 3}, {1, 2}});
@@ -54,7 +54,7 @@ TEST(Multiplication, Multiplication_WhenMatrixVector)
     EXPECT_EQ(4, v2[1]);
 }
 
-TEST(Multiplication, Multiplication_WhenVectorDotProduct)
+TEST(MatrixMultiplication, MatrixMultiplication_WhenVectorDotProduct)
 {
     Vector3i v1 = MakeVector({3, 2, 1});
     Vector3i v2 = MakeVector({2, 1, 0});
@@ -65,7 +65,7 @@ TEST(Multiplication, Multiplication_WhenVectorDotProduct)
     EXPECT_EQ(8, v3);
 }
 
-TEST(Multiplication, Multiplication_WhenTransposedViewLeft)
+TEST(MatrixMultiplication, MatrixMultiplication_WhenTransposedViewLeft)
 {
     auto m1 = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
     auto m2 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
@@ -77,7 +77,7 @@ TEST(Multiplication, Multiplication_WhenTransposedViewLeft)
     EXPECT_EQ(10, m3[1][1]);
 }
 
-TEST(Multiplication, Multiplication_WhenTransposedViewRight)
+TEST(MatrixMultiplication, MatrixMultiplication_WhenTransposedViewRight)
 {
     auto m1 = MakeMatrix({{5, 4, 3}, {2, 1, 0}});
     auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
@@ -89,7 +89,7 @@ TEST(Multiplication, Multiplication_WhenTransposedViewRight)
     EXPECT_EQ(10, m3[1][1]);
 }
 
-TEST(Multiplication, Multiplication_WhenTransposedViewLeftVectorRight)
+TEST(MatrixMultiplication, MatrixMultiplication_WhenTransposedViewLeftVectorRight)
 {
     auto m = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
     auto v1 = MakeVector({0, 1, 2});
