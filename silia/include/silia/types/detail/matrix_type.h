@@ -3,6 +3,7 @@
 
 #include <silia/types/detail/member_operations/copy.h>
 #include <silia/types/detail/member_operations/matrix_addition_assignment.h>
+#include <silia/types/detail/member_operations/matrix_member_multiplication_assignment.h>
 #include <silia/types/detail/member_operations/matrix_substraction_assignment.h>
 #include <silia/types/detail/member_operations/scalar_addition_assignment.h>
 #include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
@@ -90,6 +91,20 @@ class MatrixType
     MatrixType& operator-=(TransposedMatrixImpl<N, M, T> const& right)
     {
         MatrixSubstractAssignImpl<N, M, RawMatrix<N, M, V>, TransposedMatrixImpl<N, M, T>>(matrix_, right);
+        return *this;
+    }
+
+    template <typename OtherDerived, typename T>
+    MatrixType& operator*=(MatrixType<N, M, OtherDerived, T> const& right)
+    {
+        MatrixMemberMultiplyAssignImpl<N, M, RawMatrix<N, M, V>, MatrixType<N, M, OtherDerived, T>>(matrix_, right);
+        return *this;
+    }
+
+    template <typename T>
+    MatrixType& operator*=(TransposedMatrixImpl<N, M, T> const& right)
+    {
+        MatrixMemberMultiplyAssignImpl<N, M, RawMatrix<N, M, V>, TransposedMatrixImpl<N, M, T>>(matrix_, right);
         return *this;
     }
 

@@ -2,7 +2,12 @@
 #define SILIA__TYPES__DETAIL__TRANSPOSED_MATRIX_IMPL_H
 
 #include <silia/types/detail/index_swap.h>
+#include <silia/types/detail/member_operations/matrix_addition_assignment.h>
+#include <silia/types/detail/member_operations/matrix_member_multiplication_assignment.h>
+#include <silia/types/detail/member_operations/matrix_substraction_assignment.h>
+#include <silia/types/detail/member_operations/scalar_addition_assignment.h>
 #include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
+#include <silia/types/detail/member_operations/scalar_substraction_assignment.h>
 #include <silia/types/detail/raw_matrix.h>
 #include <silia/types/detail/types_fwd.h>
 
@@ -74,6 +79,22 @@ class TransposedMatrixImpl
     TransposedMatrixImpl& operator-=(TransposedMatrixImpl<N, M, V> const& right)
     {
         MatrixSubstractAssignImpl<N, M, TransposedMatrixImpl<N, M, T>, TransposedMatrixImpl<N, M, V>>(*this, right);
+        return *this;
+    }
+
+    template <typename OtherDerived, typename V>
+    TransposedMatrixImpl& operator*=(MatrixType<N, M, OtherDerived, V> const& right)
+    {
+        MatrixMemberMultiplyAssignImpl<N, M, TransposedMatrixImpl<N, M, T>, MatrixType<N, M, OtherDerived, V>>(*this,
+                                                                                                               right);
+        return *this;
+    }
+
+    template <typename V>
+    TransposedMatrixImpl& operator*=(TransposedMatrixImpl<N, M, V> const& right)
+    {
+        MatrixMemberMultiplyAssignImpl<N, M, TransposedMatrixImpl<N, M, T>, TransposedMatrixImpl<N, M, V>>(*this,
+                                                                                                           right);
         return *this;
     }
 
