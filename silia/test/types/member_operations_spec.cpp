@@ -283,7 +283,7 @@ TEST(MatrixSubstractionAssignment, MatrixWithMatrix)
 
     m1 -= m2;
 
-    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
     EXPECT_EQ(0, m1[0][1]);
     EXPECT_EQ(0, m1[1][0]);
@@ -299,7 +299,7 @@ TEST(MatrixSubstractionAssignment, MatrixWithVector)
 
     m -= v;
 
-    static_assert(std::is_same<decltype(m), Matrix<3, 1, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(m), Matrix<3, 1, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(-1, m[0][0]);
     EXPECT_EQ(0, m[1][0]);
     EXPECT_EQ(1, m[2][0]);
@@ -312,7 +312,7 @@ TEST(MatrixSubstractionAssignment, MatrixWithTransposed)
 
     m1 -= m2.TransposedView();
 
-    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
     EXPECT_EQ(-2, m1[0][1]);
     EXPECT_EQ(1, m1[1][0]);
@@ -328,7 +328,7 @@ TEST(MatrixSubstractionAssignment, VectorWithMatrix)
 
     v -= m;
 
-    static_assert(std::is_same<decltype(v), Vector<3, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(v), Vector<3, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(1, v[0][0]);
     EXPECT_EQ(0, v[1][0]);
     EXPECT_EQ(-1, v[2][0]);
@@ -341,7 +341,7 @@ TEST(MatrixSubstractionAssignment, VectorWithVector)
 
     v1 -= v2;
 
-    static_assert(std::is_same<decltype(v1), Vector<3, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(v1), Vector<3, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, v1[0][0]);
     EXPECT_EQ(0, v1[1][0]);
     EXPECT_EQ(0, v1[2][0]);
@@ -354,7 +354,7 @@ TEST(MatrixSubstractionAssignment, VectorWithTransposed)
 
     v -= m.TransposedView();
 
-    static_assert(std::is_same<decltype(v), Vector<3, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(v), Vector<3, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, v[0][0]);
     EXPECT_EQ(0, v[1][0]);
     EXPECT_EQ(0, v[2][0]);
@@ -367,7 +367,7 @@ TEST(MatrixSubstractionAssignment, TransposedWithMatrix)
 
     m1.TransposedView() -= m2;
 
-    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
     EXPECT_EQ(-2, m1[0][1]);
     EXPECT_EQ(1, m1[1][0]);
@@ -383,7 +383,7 @@ TEST(MatrixSubstractionAssignment, TransposedWithVector)
 
     m.TransposedView() -= v;
 
-    static_assert(std::is_same<decltype(m), Matrix<1, 3, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(m), Matrix<1, 3, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m[0][0]);
     EXPECT_EQ(0, m[0][1]);
     EXPECT_EQ(0, m[0][2]);
@@ -396,7 +396,7 @@ TEST(MatrixSubstractionAssignment, TransposedWithTransposed)
 
     m1.TransposedView() -= m2.TransposedView();
 
-    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
+    static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
     EXPECT_EQ(-2, m1[0][1]);
     EXPECT_EQ(1, m1[1][0]);
