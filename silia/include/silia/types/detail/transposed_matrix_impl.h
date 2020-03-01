@@ -3,9 +3,11 @@
 
 #include <silia/types/detail/index_swap.h>
 #include <silia/types/detail/member_operations/matrix_addition_assignment.h>
+#include <silia/types/detail/member_operations/matrix_member_division_assignment.h>
 #include <silia/types/detail/member_operations/matrix_member_multiplication_assignment.h>
 #include <silia/types/detail/member_operations/matrix_substraction_assignment.h>
 #include <silia/types/detail/member_operations/scalar_addition_assignment.h>
+#include <silia/types/detail/member_operations/scalar_division_assignment.h>
 #include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
 #include <silia/types/detail/member_operations/scalar_substraction_assignment.h>
 #include <silia/types/detail/raw_matrix.h>
@@ -39,6 +41,12 @@ class TransposedMatrixImpl
     TransposedMatrixImpl& operator*=(T const& factor)
     {
         ScalarMultiplyAssignImpl<M, N, RawMatrix<M, N, T>, T>(matrix_, factor);
+        return *this;
+    }
+
+    TransposedMatrixImpl& operator/=(T const& factor)
+    {
+        ScalarDivideAssignImpl<M, N, RawMatrix<M, N, T>, T>(matrix_, factor);
         return *this;
     }
 
