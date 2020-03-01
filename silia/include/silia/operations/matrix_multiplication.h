@@ -10,8 +10,8 @@ namespace silia
 {
 
 template <size_t I, size_t J, size_t K, typename T, typename MatrixTypeLeft, typename MatrixTypeRight>
-Matrix<I, K, T> operator*(detail::MatrixType<I, J, MatrixTypeLeft, T> const& left,
-                          detail::MatrixType<J, K, MatrixTypeRight, T> const& right)
+Matrix<I, K, T> MMult(detail::MatrixType<I, J, MatrixTypeLeft, T> const& left,
+                      detail::MatrixType<J, K, MatrixTypeRight, T> const& right)
 {
     return detail::MatrixMultiplyImpl<I,
                                       J,
@@ -23,8 +23,8 @@ Matrix<I, K, T> operator*(detail::MatrixType<I, J, MatrixTypeLeft, T> const& lef
 }
 
 template <size_t I, size_t J, size_t K, typename T, typename MatrixTypeLeft>
-Matrix<I, K, T> operator*(detail::MatrixType<I, J, MatrixTypeLeft, T> const& left,
-                          detail::TransposedMatrixImpl<J, K, T> const& right)
+Matrix<I, K, T> MMult(detail::MatrixType<I, J, MatrixTypeLeft, T> const& left,
+                      detail::TransposedMatrixImpl<J, K, T> const& right)
 {
     return detail::MatrixMultiplyImpl<I,
                                       J,
@@ -36,8 +36,8 @@ Matrix<I, K, T> operator*(detail::MatrixType<I, J, MatrixTypeLeft, T> const& lef
 }
 
 template <size_t I, size_t J, size_t K, typename T, typename MatrixTypeRight>
-Matrix<I, K, T> operator*(detail::TransposedMatrixImpl<I, J, T> const& left,
-                          detail::MatrixType<J, K, MatrixTypeRight, T> const& right)
+Matrix<I, K, T> MMult(detail::TransposedMatrixImpl<I, J, T> const& left,
+                      detail::MatrixType<J, K, MatrixTypeRight, T> const& right)
 {
     return detail::MatrixMultiplyImpl<I,
                                       J,
@@ -49,7 +49,7 @@ Matrix<I, K, T> operator*(detail::TransposedMatrixImpl<I, J, T> const& left,
 }
 
 template <size_t I, size_t J, typename T, typename MatrixTypeLeft>
-Vector<I, T> operator*(detail::MatrixType<I, J, MatrixTypeLeft, T> const& left, Vector<J, T> const& right)
+Vector<I, T> MMult(detail::MatrixType<I, J, MatrixTypeLeft, T> const& left, Vector<J, T> const& right)
 {
     return detail::
         MatrixMultiplyImpl<I, J, 1, detail::MatrixType<I, J, MatrixTypeLeft, T>, Vector<J, T>, Vector<I, T>, T>(left,
@@ -57,14 +57,14 @@ Vector<I, T> operator*(detail::MatrixType<I, J, MatrixTypeLeft, T> const& left, 
 }
 
 template <size_t I, size_t J, typename T>
-Vector<I, T> operator*(detail::TransposedMatrixImpl<I, J, T> const& left, Vector<J, T> const& right)
+Vector<I, T> MMult(detail::TransposedMatrixImpl<I, J, T> const& left, Vector<J, T> const& right)
 {
     return detail::MatrixMultiplyImpl<I, J, 1, detail::TransposedMatrixImpl<I, J, T>, Vector<J, T>, Vector<I, T>, T>(
         left, right);
 }
 
 template <size_t N, typename T>
-T operator*(const Vector<N, T>& left, const Vector<N, T>& right)
+T MMult(const Vector<N, T>& left, const Vector<N, T>& right)
 {
     T result{};
     for (size_t i = 0; i < N; ++i)
