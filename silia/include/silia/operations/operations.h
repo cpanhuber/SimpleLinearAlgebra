@@ -1,6 +1,7 @@
 #ifndef SILIA__OPERATIONS__OPERATIONS_H
 #define SILIA__OPERATIONS__OPERATIONS_H
 
+#include <silia/operations/cross_product.h>
 #include <silia/operations/elementwise_addition.h>
 #include <silia/operations/elementwise_division.h>
 #include <silia/operations/elementwise_multiplication.h>
