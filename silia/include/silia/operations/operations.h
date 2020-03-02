@@ -6,6 +6,7 @@
 #include <silia/operations/elementwise_division.h>
 #include <silia/operations/elementwise_multiplication.h>
 #include <silia/operations/elementwise_substraction.h>
+#include <silia/operations/fill.h>
 #include <silia/operations/matrix_multiplication.h>
 #include <silia/operations/norm.h>
 #include <silia/operations/scalar_addition.h>
