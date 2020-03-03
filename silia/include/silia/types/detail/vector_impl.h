@@ -18,25 +18,26 @@ template <size_t N, typename T>
 class VectorImpl : public Vector<N, T>
 {
   public:
-    using BaseType = Vector<N, T>;
-    using ValueType = T;
+    using base_type = Vector<N, T>;
+    using value_type = T;
+    using result_type = base_type;
 
     VectorImpl(T const (&list)[N])
     {
         for (size_t i = 0; i < N; ++i)
         {
-            BaseType::matrix_[i][0] = list[i];
+            base_type::matrix_[i][0] = list[i];
         }
     }
 
-    IndexableScalar<N, T> operator[](typename BaseType::index_type index)
+    IndexableScalar<N, T> operator[](typename base_type::index_type index)
     {
-        return IndexableScalar<N, T>(BaseType::matrix_[index][0]);
+        return IndexableScalar<N, T>(base_type::matrix_[index][0]);
     }
 
-    IndexableScalarConst<N, T> operator[](typename BaseType::index_type index) const
+    IndexableScalarConst<N, T> operator[](typename base_type::index_type index) const
     {
-        return IndexableScalarConst<N, T>(BaseType::matrix_[index][0]);
+        return IndexableScalarConst<N, T>(base_type::matrix_[index][0]);
     }
 
   private:

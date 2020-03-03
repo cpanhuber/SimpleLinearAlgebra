@@ -8,34 +8,24 @@
 namespace silia
 {
 
-template <size_t I, size_t J, typename T, typename MatrixType>
-detail::MatrixType<I, J, MatrixType, T> operator+(detail::MatrixType<I, J, MatrixType, T> left, T const& right)
+template <size_t I, size_t J, typename T, typename Raw, typename MatrixType>
+auto operator+(detail::MatrixType<I, J, Raw, MatrixType, T> const& left, T const& right) ->
+    typename MatrixType::result_type
 {
-    left += right;
-    return left;
+    using result_type = typename MatrixType::result_type;
+    result_type result = left;
+    result += right;
+    return result;
 }
 
-template <size_t I, size_t J, typename T>
-Matrix<I, J, T> operator+(detail::TransposedMatrixImpl<I, J, T> const& left, T const& right)
+template <size_t I, size_t J, typename T, typename Raw, typename MatrixType>
+auto operator+(T const& left, detail::MatrixType<I, J, Raw, MatrixType, T> const& right) ->
+    typename MatrixType::result_type
 {
-    Matrix<I, J, T> m = left;
-    m += right;
-    return m;
-}
-
-template <size_t I, size_t J, typename T, typename MatrixType>
-detail::MatrixType<I, J, MatrixType, T> operator+(T const& left, detail::MatrixType<I, J, MatrixType, T> right)
-{
-    right += left;
-    return right;
-}
-
-template <size_t I, size_t J, typename T>
-Matrix<I, J, T> operator+(T const& left, detail::TransposedMatrixImpl<I, J, T> const& right)
-{
-    Matrix<I, J, T> m = right;
-    m += left;
-    return m;
+    using result_type = typename MatrixType::result_type;
+    result_type result = right;
+    result += left;
+    return result;
 }
 
 }  // namespace silia

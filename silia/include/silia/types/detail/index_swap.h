@@ -1,23 +1,21 @@
 #ifndef SILIA__TYPES__DETAIL__INDEX_SWAP_H
 #define SILIA__TYPES__DETAIL__INDEX_SWAP_H
 
-#include <silia/types/detail/raw_matrix.h>
-
 namespace silia
 {
 
 namespace detail
 {
-template <size_t N, size_t M, typename T = double>
-class TransposedMatrixImpl;
+template <size_t N, size_t M, typename Raw, typename T>
+class TransposedViewImpl;
 
-template <size_t N, size_t M, typename T = double>
+template <size_t N, size_t M, typename Raw, typename T>
 class IndexSwap
 {
   public:
     using index_type = size_t;
 
-    friend TransposedMatrixImpl<M, N, T>;
+    friend TransposedViewImpl<M, N, Raw, T>;
 
     T& operator[](index_type inner_index)
     {
@@ -30,10 +28,10 @@ class IndexSwap
     }
 
   private:
-    IndexSwap(RawMatrix<N, M, T>& matrix, index_type index) : index_{index}, matrix_{matrix} {}
+    IndexSwap(Raw matrix, index_type index) : index_{index}, matrix_{matrix} {}
 
     index_type index_;
-    RawMatrix<N, M, T>& matrix_;
+    Raw matrix_;
 };
 
 }  // namespace detail

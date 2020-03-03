@@ -9,30 +9,12 @@
 namespace silia
 {
 
-template <typename T, typename MatrixTypeLeft, typename MatrixTypeRight>
-Vector<3, T> Cross(detail::MatrixType<3, 1, MatrixTypeLeft, T> const& left,
-                   detail::MatrixType<3, 1, MatrixTypeRight, T> const& right)
+template <typename T, typename RawLeft, typename RawRight, typename MatrixTypeLeft, typename MatrixTypeRight>
+Vector<3, T> Cross(detail::MatrixType<3, 1, RawLeft, MatrixTypeLeft, T> const& left,
+                   detail::MatrixType<3, 1, RawRight, MatrixTypeRight, T> const& right)
 {
-    return detail::CrossImpl<detail::MatrixType<3, 1, MatrixTypeLeft, T>,
-                             detail::MatrixType<3, 1, MatrixTypeRight, T>,
-                             Vector<3, T>>(left, right);
-}
-
-template <typename T, typename MatrixTypeLeft>
-Vector<3, T> Cross(detail::MatrixType<3, 1, MatrixTypeLeft, T> const& left,
-                   detail::TransposedMatrixImpl<3, 1, T> const& right)
-{
-    return detail::CrossImpl<detail::MatrixType<3, 1, MatrixTypeLeft, T>,
-                             detail::TransposedMatrixImpl<3, 1, T>,
-                             Vector<3, T>>(left, right);
-}
-
-template <typename T, typename MatrixTypeRight>
-Vector<3, T> Cross(detail::TransposedMatrixImpl<3, 1, T> const& left,
-                   detail::MatrixType<3, 1, MatrixTypeRight, T> const& right)
-{
-    return detail::CrossImpl<detail::TransposedMatrixImpl<3, 1, T>,
-                             detail::MatrixType<3, 1, MatrixTypeRight, T>,
+    return detail::CrossImpl<detail::MatrixType<3, 1, RawLeft, MatrixTypeLeft, T>,
+                             detail::MatrixType<3, 1, RawRight, MatrixTypeRight, T>,
                              Vector<3, T>>(left, right);
 }
 

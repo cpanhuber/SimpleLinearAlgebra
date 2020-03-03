@@ -8,30 +8,20 @@
 namespace silia
 {
 
-template <size_t I, size_t J, typename T, typename MatrixTypeLeft, typename MatrixTypeRight>
-detail::MatrixType<I, J, MatrixTypeLeft, T> operator-(detail::MatrixType<I, J, MatrixTypeLeft, T> left,
-                                                      detail::MatrixType<I, J, MatrixTypeRight, T> const& right)
+template <size_t I,
+          size_t J,
+          typename T,
+          typename RawLeft,
+          typename RawRight,
+          typename MatrixTypeLeft,
+          typename MatrixTypeRight>
+auto operator-(detail::MatrixType<I, J, RawLeft, MatrixTypeLeft, T> const& left,
+               detail::MatrixType<I, J, RawRight, MatrixTypeRight, T> const& right) ->
+    typename MatrixTypeLeft::result_type
 {
-    left -= right;
-    return left;
-}
-
-template <size_t I, size_t J, typename T, typename MatrixTypeRight>
-detail::MatrixType<I, J, detail::MatrixImpl<I, J, T>, T> operator-(
-    detail::TransposedMatrixImpl<I, J, T> const& left,
-    detail::MatrixType<I, J, MatrixTypeRight, T> const& right)
-{
-    detail::MatrixType<I, J, detail::MatrixImpl<I, J, T>, T> result = left;
+    typename MatrixTypeLeft::result_type result{left};
     result -= right;
     return result;
-}
-
-template <size_t I, size_t J, typename T, typename MatrixTypeLeft>
-detail::MatrixType<I, J, MatrixTypeLeft, T> operator-(detail::MatrixType<I, J, MatrixTypeLeft, T> left,
-                                                      detail::TransposedMatrixImpl<I, J, T> const& right)
-{
-    left -= right;
-    return left;
 }
 
 }  // namespace silia

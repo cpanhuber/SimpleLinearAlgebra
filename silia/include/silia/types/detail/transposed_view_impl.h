@@ -1,0 +1,55 @@
+#ifndef SILIA__TYPES__DETAIL__TRANSPOSED_VIEW_IMPL_H
+#define SILIA__TYPES__DETAIL__TRANSPOSED_VIEW_IMPL_H
+
+#include <silia/types/detail/index_swap.h>
+#include <silia/types/detail/member_operations/matrix_addition_assignment.h>
+#include <silia/types/detail/member_operations/matrix_member_division_assignment.h>
+#include <silia/types/detail/member_operations/matrix_member_multiplication_assignment.h>
+#include <silia/types/detail/member_operations/matrix_substraction_assignment.h>
+#include <silia/types/detail/member_operations/scalar_addition_assignment.h>
+#include <silia/types/detail/member_operations/scalar_division_assignment.h>
+#include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
+#include <silia/types/detail/member_operations/scalar_substraction_assignment.h>
+#include <silia/types/detail/raw_matrix.h>
+#include <silia/types/detail/types_fwd.h>
+
+#include <type_traits>
+
+namespace silia
+{
+
+namespace detail
+{
+
+template <size_t N, size_t M, typename Raw, typename T>
+class TransposedViewImpl : public TransposedView<N, M, Raw, T>
+{
+  public:
+    using index_type = size_t;
+    friend Vector<M, T>;
+    friend Matrix<M, N, T>;
+    friend Matrix<N, M, T>;
+
+    using base_type = TransposedView<N, M, Raw, T>;
+
+    using result_type = Matrix<N, M, T>;
+
+    IndexSwap<M, N, Raw, T> operator[](index_type index)
+    {
+        return IndexSwap<M, N, Raw, T>(base_type::matrix_, index);
+    }
+
+    IndexSwap<M, N, Raw, T> operator[](index_type index) const
+    {
+        return IndexSwap<M, N, Raw, T>(base_type::matrix_, index);
+    }
+
+  private:
+    TransposedViewImpl(Raw matrix) : base_type{matrix} {}
+};
+
+}  // namespace detail
+
+}  // namespace silia
+
+#endif  // SILIA__TYPES__DETAIL__TRANSPOSED_VIEW_IMPL_H

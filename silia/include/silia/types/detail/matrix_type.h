@@ -10,7 +10,7 @@
 #include <silia/types/detail/member_operations/scalar_division_assignment.h>
 #include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
 #include <silia/types/detail/member_operations/scalar_substraction_assignment.h>
-#include <silia/types/detail/transposed_matrix_impl.h>
+#include <silia/types/detail/transposed_view_impl.h>
 
 #include <cstddef>
 #include <type_traits>
@@ -21,7 +21,7 @@ namespace silia
 namespace detail
 {
 
-template <size_t N, size_t M, typename Derived, typename V>
+template <size_t N, size_t M, typename Raw, typename Derived, typename V>
 class MatrixType
 {
   public:
@@ -31,7 +31,7 @@ class MatrixType
     auto operator[](index_type index) -> decltype(std::declval<T>()[0])
     {
         static_assert(std::is_same<T, Derived>::value,
-                      "Only the default template argument is allowed for Matrix::operator[]");
+                      "Only the default template argument is allowed for MatrixType::operator[]");
 
         return static_cast<T*>(this)->operator[](index);
     }
@@ -40,93 +40,66 @@ class MatrixType
     auto operator[](index_type index) const -> decltype(std::declval<T const>()[0])
     {
         static_assert(std::is_same<T, Derived>::value,
-                      "Only the default template argument is allowed for Matrix::operator[]");
+                      "Only the default template argument is allowed for MatrixType::operator[]");
 
         return static_cast<T const*>(this)->operator[](index);
     }
 
-    detail::TransposedMatrixImpl<M, N, V> TransposedView()
+    detail::TransposedViewImpl<M, N, MatrixType<N, M, Raw, Derived, V>&, V> TransposedView()
     {
-        return detail::TransposedMatrixImpl<M, N, V>(matrix_);
+        return detail::TransposedViewImpl<M, N, MatrixType<N, M, Raw, Derived, V>&, V>(*this);
     }
 
     MatrixType& operator*=(V const& factor)
     {
-        ScalarMultiplyAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, factor);
+        ScalarMultiplyAssignImpl<N, M, decltype(*this), V>(*this, factor);
         return *this;
     }
 
     MatrixType& operator/=(V const& factor)
     {
-        ScalarDivideAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, factor);
+        ScalarDivideAssignImpl<N, M, decltype(*this), V>(*this, factor);
         return *this;
     }
 
     MatrixType& operator+=(V const& summand)
     {
-        ScalarAddAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, summand);
+        ScalarAddAssignImpl<N, M, decltype(*this), V>(*this, summand);
         return *this;
     }
 
     MatrixType& operator-=(V const& summand)
     {
-        ScalarSubstractAssignImpl<N, M, RawMatrix<N, M, V>, V>(matrix_, summand);
+        ScalarSubstractAssignImpl<N, M, decltype(*this), V>(*this, summand);
         return *this;
     }
 
-    template <typename OtherDerived, typename T>
-    MatrixType& operator+=(MatrixType<N, M, OtherDerived, T> const& right)
+    template <typename OtherRaw, typename OtherDerived, typename T>
+    MatrixType& operator+=(MatrixType<N, M, OtherRaw, OtherDerived, T> const& right)
     {
-        MatrixAddAssignImpl<N, M, RawMatrix<N, M, V>, MatrixType<N, M, OtherDerived, T>>(matrix_, right);
+        MatrixAddAssignImpl<N, M, decltype(*this), MatrixType<N, M, OtherRaw, OtherDerived, T>>(*this, right);
         return *this;
     }
 
-    template <typename T>
-    MatrixType& operator+=(TransposedMatrixImpl<N, M, T> const& right)
+    template <typename OtherRaw, typename OtherDerived, typename T>
+    MatrixType& operator-=(MatrixType<N, M, OtherRaw, OtherDerived, T> const& right)
     {
-        MatrixAddAssignImpl<N, M, RawMatrix<N, M, V>, TransposedMatrixImpl<N, M, T>>(matrix_, right);
+        MatrixSubstractAssignImpl<N, M, decltype(*this), MatrixType<N, M, OtherRaw, OtherDerived, T>>(*this, right);
         return *this;
     }
 
-    template <typename OtherDerived, typename T>
-    MatrixType& operator-=(MatrixType<N, M, OtherDerived, T> const& right)
+    template <typename OtherRaw, typename OtherDerived, typename T>
+    MatrixType& operator*=(MatrixType<N, M, OtherRaw, OtherDerived, T> const& right)
     {
-        MatrixSubstractAssignImpl<N, M, RawMatrix<N, M, V>, MatrixType<N, M, OtherDerived, T>>(matrix_, right);
+        MatrixMemberMultiplyAssignImpl<N, M, decltype(*this), MatrixType<N, M, OtherRaw, OtherDerived, T>>(*this,
+                                                                                                           right);
         return *this;
     }
 
-    template <typename T>
-    MatrixType& operator-=(TransposedMatrixImpl<N, M, T> const& right)
+    template <typename OtherRaw, typename OtherDerived, typename T>
+    MatrixType& operator/=(MatrixType<N, M, OtherRaw, OtherDerived, T> const& right)
     {
-        MatrixSubstractAssignImpl<N, M, RawMatrix<N, M, V>, TransposedMatrixImpl<N, M, T>>(matrix_, right);
-        return *this;
-    }
-
-    template <typename OtherDerived, typename T>
-    MatrixType& operator*=(MatrixType<N, M, OtherDerived, T> const& right)
-    {
-        MatrixMemberMultiplyAssignImpl<N, M, RawMatrix<N, M, V>, MatrixType<N, M, OtherDerived, T>>(matrix_, right);
-        return *this;
-    }
-
-    template <typename T>
-    MatrixType& operator*=(TransposedMatrixImpl<N, M, T> const& right)
-    {
-        MatrixMemberMultiplyAssignImpl<N, M, RawMatrix<N, M, V>, TransposedMatrixImpl<N, M, T>>(matrix_, right);
-        return *this;
-    }
-
-    template <typename OtherDerived, typename T>
-    MatrixType& operator/=(MatrixType<N, M, OtherDerived, T> const& right)
-    {
-        MatrixMemberDivideAssignImpl<N, M, RawMatrix<N, M, V>, MatrixType<N, M, OtherDerived, T>>(matrix_, right);
-        return *this;
-    }
-
-    template <typename T>
-    MatrixType& operator/=(TransposedMatrixImpl<N, M, T> const& right)
-    {
-        MatrixMemberDivideAssignImpl<N, M, RawMatrix<N, M, V>, TransposedMatrixImpl<N, M, T>>(matrix_, right);
+        MatrixMemberDivideAssignImpl<N, M, decltype(*this), MatrixType<N, M, OtherRaw, OtherDerived, T>>(*this, right);
         return *this;
     }
 
@@ -141,21 +114,24 @@ class MatrixType
         }
     }
 
-    MatrixType(TransposedMatrixImpl<N, M, V> const& other) : matrix_{}
+    template <typename OtherRaw, typename OtherDerived>
+    MatrixType(MatrixType<N, M, OtherRaw, OtherDerived, V> const& other) : matrix_{}
     {
-        Copy<N, M, TransposedMatrixImpl<N, M, V>, detail::RawMatrix<N, M, V>, V>(other, matrix_);
+        Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Raw, V>(other, matrix_);
     }
 
-    MatrixType& operator=(TransposedMatrixImpl<N, M, V> const& other)
+    template <typename OtherRaw, typename OtherDerived>
+    MatrixType& operator=(MatrixType<N, M, OtherRaw, OtherDerived, V> const& other)
     {
-        Copy<N, M, TransposedMatrixImpl<N, M, V>, detail::RawMatrix<N, M, V>, V>(other, matrix_);
+        Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Raw, V>(other, matrix_);
         return *this;
     }
 
     MatrixType() : matrix_{} {}
 
   protected:
-    detail::RawMatrix<N, M, V> matrix_;
+    MatrixType(Raw matrix) : matrix_(matrix) {}
+    Raw matrix_;
 };
 
 }  // namespace detail

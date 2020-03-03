@@ -15,19 +15,21 @@ template <size_t N, size_t M, typename T>
 class MatrixImpl : public Matrix<N, M, T>
 {
   public:
-    using BaseType = Matrix<N, M, T>;
-    using ValueType = std::array<T, M>;
-    using BaseType::MatrixType;
+    using base_type = Matrix<N, M, T>;
+    using value_type = std::array<T, M>;
+    using result_type = base_type;
 
-    std::array<T, M>& operator[](typename BaseType::index_type index)
+    std::array<T, M>& operator[](typename base_type::index_type index)
     {
-        return BaseType::matrix_[index];
+        return base_type::matrix_[index];
     }
 
-    std::array<T, M> const& operator[](typename BaseType::index_type index) const
+    std::array<T, M> const& operator[](typename base_type::index_type index) const
     {
-        return BaseType::matrix_[index];
+        return base_type::matrix_[index];
     }
+
+    MatrixImpl(T const (&list)[N][M]) : base_type(list) {}
 
   private:
     MatrixImpl() {}
