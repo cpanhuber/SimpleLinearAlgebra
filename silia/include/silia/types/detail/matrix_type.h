@@ -10,6 +10,7 @@
 #include <silia/types/detail/member_operations/scalar_division_assignment.h>
 #include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
 #include <silia/types/detail/member_operations/scalar_substraction_assignment.h>
+#include <silia/types/detail/row_view_impl.h>
 #include <silia/types/detail/transposed_view_impl.h>
 
 #include <cstddef>
@@ -48,6 +49,11 @@ class MatrixType
     detail::TransposedViewImpl<M, N, MatrixType<N, M, Raw, Derived, V>&, V> TransposedView()
     {
         return detail::TransposedViewImpl<M, N, MatrixType<N, M, Raw, Derived, V>&, V>(*this);
+    }
+
+    detail::RowViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&> RowView(index_type index)
+    {
+        return detail::RowViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&>(*this, index);
     }
 
     MatrixType& operator*=(V const& factor)

@@ -20,6 +20,9 @@ class MatrixImpl;
 template <size_t N, size_t M, typename Raw, typename T>
 class TransposedViewImpl;
 
+template <size_t N, typename T, typename Raw>
+class RowViewImpl;
+
 template <size_t N, size_t M, typename R, typename T, typename V>
 class MatrixType;
 
@@ -30,6 +33,9 @@ using Matrix = detail::MatrixType<N, M, detail::RawMatrix<N, M, T>, detail::Matr
 
 template <size_t N, size_t M, typename Raw, typename T>
 using TransposedView = detail::MatrixType<N, M, Raw, detail::TransposedViewImpl<N, M, Raw, T>, T>;
+
+template <size_t N, typename T, typename Raw>
+using RowView = detail::MatrixType<N, 1, Raw, detail::RowViewImpl<N, T, Raw>, T>;
 
 template <size_t N, typename T>
 using Vector = detail::MatrixType<N, 1, detail::RawMatrix<N, 1, T>, detail::VectorImpl<N, T>, T>;

@@ -11,13 +11,11 @@ namespace silia
 namespace detail
 {
 
-template <size_t N, typename T = double>
+template <size_t N, typename T>
 class IndexableScalar
 {
   public:
     using index_type = size_t;
-
-    friend VectorImpl<N, T>;
 
     T& operator[](index_type index)
     {
@@ -41,19 +39,17 @@ class IndexableScalar
         value_ = value;
     }
 
-  private:
     IndexableScalar(T& value) : value_{value} {}
 
+  private:
     T& value_;
 };
 
-template <size_t N, typename T = double>
+template <size_t N, typename T>
 class IndexableScalarConst
 {
   public:
     using index_type = size_t;
-
-    friend VectorImpl<N, T>;
 
     T operator[](index_type index) const
     {
@@ -66,9 +62,9 @@ class IndexableScalarConst
         return value_;
     }
 
-  private:
     IndexableScalarConst(T const& value) : value_{value} {}
 
+  private:
     const T& value_;
 };
 
