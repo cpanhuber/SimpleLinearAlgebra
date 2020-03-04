@@ -104,7 +104,7 @@ TEST(Norm, SquaredNorm_WhenTransposedView)
 {
     auto m = MakeMatrix({{2, 3, 1}});
 
-    auto norm = SquaredNorm(m.TransposedView());
+    auto norm = SquaredNorm(m.GetTransposedView());
 
     static_assert(std::is_same<decltype(norm), double>::value, "norm type check failed");
     double tolerance = 1e-9;
@@ -115,7 +115,7 @@ TEST(Norm, SquaredNormF_WhenTransposedView)
 {
     auto m = MakeMatrix({{2, 3, 1}});
 
-    auto norm = SquaredNormF(m.TransposedView());
+    auto norm = SquaredNormF(m.GetTransposedView());
 
     static_assert(std::is_same<decltype(norm), float>::value, "norm type check failed");
     float tolerance = 1e-7f;
@@ -126,7 +126,7 @@ TEST(Norm, Norm_WhenTransposedView)
 {
     auto m = MakeMatrix({{2, 3, 1}});
 
-    auto norm = Norm(m.TransposedView());
+    auto norm = Norm(m.GetTransposedView());
 
     static_assert(std::is_same<decltype(norm), double>::value, "norm type check failed");
     double tolerance = 1e-9;
@@ -137,7 +137,7 @@ TEST(Norm, NormF_WhenTransposedView)
 {
     auto m = MakeMatrix({{2, 3, 1}});
 
-    auto norm = NormF(m.TransposedView());
+    auto norm = NormF(m.GetTransposedView());
 
     static_assert(std::is_same<decltype(norm), float>::value, "norm type check failed");
     float tolerance = 1e-7f;

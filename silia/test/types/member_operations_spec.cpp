@@ -46,7 +46,7 @@ TEST(ScalarMultiplicationAssignment, TransposedWithScalarAssignment)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     int factor = 2;
 
-    m1.TransposedView() *= factor;
+    m1.GetTransposedView() *= factor;
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(0, m1[0][0]);
@@ -91,7 +91,7 @@ TEST(ScalarDivisionAssignment, TransposedWithScalarAssignment)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     int factor = 2;
 
-    m1.TransposedView() /= factor;
+    m1.GetTransposedView() /= factor;
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(0, m1[0][0]);
@@ -136,7 +136,7 @@ TEST(ScalarAdditionAssignment, TransposedWithScalarAssignment)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     int summand = 2;
 
-    m1.TransposedView() += summand;
+    m1.GetTransposedView() += summand;
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(2, m1[0][0]);
@@ -181,7 +181,7 @@ TEST(ScalarSubstractionAssignment, TransposedWithScalarAssignment)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     int summand = 2;
 
-    m1.TransposedView() -= summand;
+    m1.GetTransposedView() -= summand;
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(-2, m1[0][0]);
@@ -226,7 +226,7 @@ TEST(MatrixAdditionAssignment, MatrixWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    m1 += m2.TransposedView();
+    m1 += m2.GetTransposedView();
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
@@ -268,7 +268,7 @@ TEST(MatrixAdditionAssignment, VectorWithTransposed)
     auto v = MakeVector({1, 2, 3});
     auto m = MakeMatrix({{1, 2, 3}});
 
-    v += m.TransposedView();
+    v += m.GetTransposedView();
 
     static_assert(std::is_same<decltype(v), Vector<3, int>>::value, "addition assignment type check failed");
     EXPECT_EQ(2, v[0][0]);
@@ -281,7 +281,7 @@ TEST(MatrixAdditionAssignment, TransposedWithMatrix)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    m1.TransposedView() += m2;
+    m1.GetTransposedView() += m2;
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
@@ -297,7 +297,7 @@ TEST(MatrixAdditionAssignment, TransposedWithVector)
     auto m = MakeMatrix({{1, 2, 3}});
     auto v = MakeVector({1, 2, 3});
 
-    m.TransposedView() += v;
+    m.GetTransposedView() += v;
 
     static_assert(std::is_same<decltype(m), Matrix<1, 3, int>>::value, "addition assignment type check failed");
     EXPECT_EQ(2, m[0][0]);
@@ -310,7 +310,7 @@ TEST(MatrixAdditionAssignment, TransposedWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 3}, {1, 4}, {2, 5}});
 
-    m1.TransposedView() += m2.TransposedView();
+    m1.GetTransposedView() += m2.GetTransposedView();
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "addition assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
@@ -355,7 +355,7 @@ TEST(MatrixSubstractionAssignment, MatrixWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    m1 -= m2.TransposedView();
+    m1 -= m2.GetTransposedView();
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
@@ -397,7 +397,7 @@ TEST(MatrixSubstractionAssignment, VectorWithTransposed)
     auto v = MakeVector({1, 2, 3});
     auto m = MakeMatrix({{1, 2, 3}});
 
-    v -= m.TransposedView();
+    v -= m.GetTransposedView();
 
     static_assert(std::is_same<decltype(v), Vector<3, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, v[0][0]);
@@ -410,7 +410,7 @@ TEST(MatrixSubstractionAssignment, TransposedWithMatrix)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    m1.TransposedView() -= m2;
+    m1.GetTransposedView() -= m2;
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
@@ -426,7 +426,7 @@ TEST(MatrixSubstractionAssignment, TransposedWithVector)
     auto m = MakeMatrix({{1, 2, 3}});
     auto v = MakeVector({1, 2, 3});
 
-    m.TransposedView() -= v;
+    m.GetTransposedView() -= v;
 
     static_assert(std::is_same<decltype(m), Matrix<1, 3, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m[0][0]);
@@ -439,7 +439,7 @@ TEST(MatrixSubstractionAssignment, TransposedWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 3}, {1, 4}, {2, 5}});
 
-    m1.TransposedView() -= m2.TransposedView();
+    m1.GetTransposedView() -= m2.GetTransposedView();
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "substraction assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);
@@ -486,7 +486,7 @@ TEST(MatrixMemberMultiplicationAssignment, MatrixWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    m1 *= m2.TransposedView();
+    m1 *= m2.GetTransposedView();
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value,
                   "member multiplication assignment type check failed");
@@ -531,7 +531,7 @@ TEST(MatrixMemberMultiplicationAssignment, VectorWithTransposed)
     auto v = MakeVector({1, 2, 3});
     auto m = MakeMatrix({{1, 2, 3}});
 
-    v *= m.TransposedView();
+    v *= m.GetTransposedView();
 
     static_assert(std::is_same<decltype(v), Vector<3, int>>::value,
                   "member multiplication assignment type check failed");
@@ -545,7 +545,7 @@ TEST(MatrixMemberMultiplicationAssignment, TransposedWithMatrix)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    m1.TransposedView() *= m2;
+    m1.GetTransposedView() *= m2;
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value,
                   "member multiplication assignment type check failed");
@@ -562,7 +562,7 @@ TEST(MatrixMemberMultiplicationAssignment, TransposedWithVector)
     auto m = MakeMatrix({{1, 2, 3}});
     auto v = MakeVector({1, 2, 3});
 
-    m.TransposedView() *= v;
+    m.GetTransposedView() *= v;
 
     static_assert(std::is_same<decltype(m), Matrix<1, 3, int>>::value,
                   "member multiplication assignment type check failed");
@@ -576,7 +576,7 @@ TEST(MatrixMemberMultiplicationAssignment, TransposedWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{0, 3}, {1, 4}, {2, 5}});
 
-    m1.TransposedView() *= m2.TransposedView();
+    m1.GetTransposedView() *= m2.GetTransposedView();
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value,
                   "member multiplication assignment type check failed");
@@ -624,7 +624,7 @@ TEST(MatrixMemberDivisionAssignment, MatrixWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{1, 1, 2}, {3, 4, 5}});
 
-    m1 /= m2.TransposedView();
+    m1 /= m2.GetTransposedView();
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value,
                   "member division multiplication assignment type check failed");
@@ -669,7 +669,7 @@ TEST(MatrixMemberDivisionAssignment, VectorWithTransposed)
     auto v = MakeVector({1, 2, 3});
     auto m = MakeMatrix({{1, 2, 3}});
 
-    v /= m.TransposedView();
+    v /= m.GetTransposedView();
 
     static_assert(std::is_same<decltype(v), Vector<3, int>>::value,
                   "member division multiplication assignment type check failed");
@@ -683,7 +683,7 @@ TEST(MatrixMemberDivisionAssignment, TransposedWithMatrix)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{1, 1, 2}, {3, 4, 5}});
 
-    m1.TransposedView() /= m2;
+    m1.GetTransposedView() /= m2;
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value,
                   "member division multiplication assignment type check failed");
@@ -700,7 +700,7 @@ TEST(MatrixMemberDivisionAssignment, TransposedWithVector)
     auto m = MakeMatrix({{1, 2, 3}});
     auto v = MakeVector({1, 2, 3});
 
-    m.TransposedView() /= v;
+    m.GetTransposedView() /= v;
 
     static_assert(std::is_same<decltype(m), Matrix<1, 3, int>>::value,
                   "member division multiplication assignment type check failed");
@@ -714,7 +714,7 @@ TEST(MatrixMemberDivisionAssignment, TransposedWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     auto m2 = MakeMatrix({{1, 3}, {1, 4}, {2, 5}});
 
-    m1.TransposedView() /= m2.TransposedView();
+    m1.GetTransposedView() /= m2.GetTransposedView();
 
     static_assert(std::is_same<decltype(m1), Matrix<3, 2, int>>::value, "member division assignment type check failed");
     EXPECT_EQ(0, m1[0][0]);

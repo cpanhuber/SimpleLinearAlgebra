@@ -69,7 +69,7 @@ TEST(CrossProduct, CrossProduct_WhenTransposedViewLeft)
     auto m1 = MakeMatrix({{1, 0, 3}});
     auto m2 = MakeMatrix({{4}, {2}, {6}});
 
-    auto v = Cross(m1.TransposedView(), m2);
+    auto v = Cross(m1.GetTransposedView(), m2);
 
     static_assert(std::is_same<decltype(v), Vector<3, int>>::value, "Cross product type check failed");
     EXPECT_EQ(-6, v[0]);
@@ -82,7 +82,7 @@ TEST(CrossProduct, CrossProduct_WhenTransposedViewRight)
     auto m1 = MakeMatrix({{1}, {0}, {3}});
     auto m2 = MakeMatrix({{4, 2, 6}});
 
-    auto v = Cross(m1, m2.TransposedView());
+    auto v = Cross(m1, m2.GetTransposedView());
 
     static_assert(std::is_same<decltype(v), Vector<3, int>>::value, "Cross product type check failed");
     EXPECT_EQ(-6, v[0]);
@@ -95,7 +95,7 @@ TEST(CrossProduct, CrossProduct_WhenTransposedViewLeftVectorRight)
     auto m = MakeMatrix({{1, 0, 3}});
     auto v1 = MakeVector({4, 2, 6});
 
-    auto v2 = Cross(m.TransposedView(), v1);
+    auto v2 = Cross(m.GetTransposedView(), v1);
 
     static_assert(std::is_same<decltype(v2), Vector<3, int>>::value, "Cross product type check failed");
     EXPECT_EQ(-6, v2[0]);
@@ -108,7 +108,7 @@ TEST(CrossProduct, CrossProduct_WhenVectorLeftTransposedViewRight)
     auto v1 = MakeVector({1, 0, 3});
     auto m = MakeMatrix({{4, 2, 6}});
 
-    auto v2 = Cross(v1, m.TransposedView());
+    auto v2 = Cross(v1, m.GetTransposedView());
 
     static_assert(std::is_same<decltype(v2), Vector<3, int>>::value, "Cross product type check failed");
     EXPECT_EQ(-6, v2[0]);

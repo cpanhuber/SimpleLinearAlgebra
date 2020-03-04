@@ -47,9 +47,13 @@ class MatrixType
         return static_cast<T const*>(this)->operator[](index);
     }
 
-    detail::TransposedViewImpl<M, N, MatrixType<N, M, Raw, Derived, V>&, V> TransposedView()
+    template <typename T = Derived>
+    auto GetTransposedView() -> decltype(std::declval<T>().GetTransposedView())
     {
-        return detail::TransposedViewImpl<M, N, MatrixType<N, M, Raw, Derived, V>&, V>(*this);
+        static_assert(std::is_same<T, Derived>::value,
+                      "Only the default template argument is allowed for MatrixType::GetTransposedView()");
+
+        return static_cast<T*>(this)->GetTransposedView();
     }
 
     detail::RowViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&> RowView(index_type index)
@@ -113,6 +117,11 @@ class MatrixType
     {
         MatrixMemberDivideAssignImpl<N, M, decltype(*this), MatrixType<N, M, OtherRaw, OtherDerived, T>>(*this, right);
         return *this;
+    }
+
+    constexpr bool IsView() const
+    {
+        return static_cast<Derived const* const>(this)->IsView();
     }
 
     MatrixType(V const (&list)[N][M]) : matrix_{}

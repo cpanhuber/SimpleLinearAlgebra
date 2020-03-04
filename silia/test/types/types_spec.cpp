@@ -38,36 +38,60 @@ TEST(Types, CopylessTranspose_WhenMatrix3x2)
 {
     auto m = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
 
-    EXPECT_EQ(5, m.TransposedView()[0][0]);
-    EXPECT_EQ(3, m.TransposedView()[0][1]);
-    EXPECT_EQ(1, m.TransposedView()[0][2]);
-    EXPECT_EQ(4, m.TransposedView()[1][0]);
-    EXPECT_EQ(2, m.TransposedView()[1][1]);
-    EXPECT_EQ(0, m.TransposedView()[1][2]);
-    EXPECT_EQ(&(m[0][0]), &(m.TransposedView()[0][0]));
+    EXPECT_EQ(5, m.GetTransposedView()[0][0]);
+    EXPECT_EQ(3, m.GetTransposedView()[0][1]);
+    EXPECT_EQ(1, m.GetTransposedView()[0][2]);
+    EXPECT_EQ(4, m.GetTransposedView()[1][0]);
+    EXPECT_EQ(2, m.GetTransposedView()[1][1]);
+    EXPECT_EQ(0, m.GetTransposedView()[1][2]);
+    EXPECT_EQ(&(m[0][0]), &(m.GetTransposedView()[0][0]));
 }
 
 TEST(Types, CopylessTranspose_WhenMatrix2x3)
 {
     auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    EXPECT_EQ(0, m.TransposedView()[0][0]);
-    EXPECT_EQ(3, m.TransposedView()[0][1]);
-    EXPECT_EQ(1, m.TransposedView()[1][0]);
-    EXPECT_EQ(4, m.TransposedView()[1][1]);
-    EXPECT_EQ(2, m.TransposedView()[2][0]);
-    EXPECT_EQ(5, m.TransposedView()[2][1]);
-    EXPECT_EQ(&(m[0][0]), &(m.TransposedView()[0][0]));
+    EXPECT_EQ(0, m.GetTransposedView()[0][0]);
+    EXPECT_EQ(3, m.GetTransposedView()[0][1]);
+    EXPECT_EQ(1, m.GetTransposedView()[1][0]);
+    EXPECT_EQ(4, m.GetTransposedView()[1][1]);
+    EXPECT_EQ(2, m.GetTransposedView()[2][0]);
+    EXPECT_EQ(5, m.GetTransposedView()[2][1]);
+    EXPECT_EQ(&(m[0][0]), &(m.GetTransposedView()[0][0]));
 }
 
 TEST(Types, CopylessTranspose_WhenVector)
 {
     auto v = MakeVector({5, 4, 3});
 
-    EXPECT_EQ(5, v.TransposedView()[0][0]);
-    EXPECT_EQ(4, v.TransposedView()[0][1]);
-    EXPECT_EQ(3, v.TransposedView()[0][2]);
-    EXPECT_EQ(&(v[0][0]), &(v.TransposedView()[0][0]));
+    EXPECT_EQ(5, v.GetTransposedView()[0][0]);
+    EXPECT_EQ(4, v.GetTransposedView()[0][1]);
+    EXPECT_EQ(3, v.GetTransposedView()[0][2]);
+    EXPECT_EQ(&(v[0][0]), &(v.GetTransposedView()[0][0]));
+}
+
+TEST(Types, ChainedCopylessTranspose)
+{
+    auto m1 = MakeMatrix({{1, 2, 3}, {4, 5, 6}});
+
+    auto m2 = m1.GetTransposedView().GetTransposedView();
+
+    EXPECT_EQ(m1[0][0], m2[0][0]);
+    EXPECT_EQ(m1[0][1], m2[0][1]);
+    EXPECT_EQ(m1[0][2], m2[0][2]);
+    EXPECT_EQ(m1[1][0], m2[1][0]);
+    EXPECT_EQ(m1[1][1], m2[1][1]);
+    EXPECT_EQ(m1[1][2], m2[1][2]);
+}
+
+TEST(Types, ChainedCopylessTranspose_WhenModify)
+{
+    auto m1 = MakeMatrix({{1, 2, 3}, {4, 5, 6}});
+    auto m2 = m1.GetTransposedView().GetTransposedView();
+
+    m2[0][0] = 0;
+
+    EXPECT_EQ(0, m1[0][0]);
 }
 
 TEST(Types, RowView_WhenMatrix)
@@ -83,8 +107,9 @@ TEST(Types, RowView_WhenTransposedView)
 {
     auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    EXPECT_EQ(2, m.TransposedView().RowView(2)[0]);
-    EXPECT_EQ(5, m.TransposedView().RowView(2)[1]);
+    EXPECT_EQ(2, m.GetTransposedView().RowView(2)[0]);
+    EXPECT_EQ(5, m.GetTransposedView().RowView(2)[1]);
+}
 
 TEST(Types, ColumnView_WhenMatrix)
 {
@@ -112,7 +137,7 @@ TEST(Types, CopyConstructTransposedToMatrix)
 {
     Matrix<2, 3, int> m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    Matrix<3, 2, int> m1 = m2.TransposedView();
+    Matrix<3, 2, int> m1 = m2.GetTransposedView();
 
     EXPECT_EQ(0, m1[0][0]);
     EXPECT_EQ(3, m1[0][1]);
@@ -127,7 +152,7 @@ TEST(Types, CopyAssignTransposedToMatrix)
     Matrix<3, 2, int> m1 = MakeMatrix({{0, 0}, {0, 0}, {0, 0}});
     Matrix<2, 3, int> m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    m1 = m2.TransposedView();
+    m1 = m2.GetTransposedView();
 
     EXPECT_EQ(0, m1[0][0]);
     EXPECT_EQ(3, m1[0][1]);
@@ -135,6 +160,19 @@ TEST(Types, CopyAssignTransposedToMatrix)
     EXPECT_EQ(4, m1[1][1]);
     EXPECT_EQ(2, m1[2][0]);
     EXPECT_EQ(5, m1[2][1]);
+}
+
+TEST(Types, IsView)
+{
+    auto m = MakeMatrix({{0, 1}});
+    auto t = m.GetTransposedView();
+    auto c = m.ColumnView(1);
+    auto r = m.RowView(0);
+
+    EXPECT_FALSE(m.IsView());
+    EXPECT_TRUE(t.IsView());
+    EXPECT_TRUE(c.IsView());
+    EXPECT_TRUE(r.IsView());
 }
 
 }  // namespace

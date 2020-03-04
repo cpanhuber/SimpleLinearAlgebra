@@ -70,7 +70,7 @@ TEST(ElementwiseMultiplication, ElementwiseMultiplication_WhenTransposedViewLeft
     auto m1 = MakeMatrix({{5, 4}, {3, 2}});
     auto m2 = MakeMatrix({{0, 1}, {2, 3}});
 
-    auto m3 = m1.TransposedView() * m2;
+    auto m3 = m1.GetTransposedView() * m2;
     EXPECT_EQ(0, m3[0][0]);
     EXPECT_EQ(3, m3[0][1]);
     EXPECT_EQ(8, m3[1][0]);
@@ -82,7 +82,7 @@ TEST(ElementwiseMultiplication, ElementwiseMultiplication_WhenTransposedViewRigh
     auto m1 = MakeMatrix({{5, 4}, {3, 2}});
     auto m2 = MakeMatrix({{0, 1}, {2, 3}});
 
-    auto m3 = m2 * m1.TransposedView();
+    auto m3 = m2 * m1.GetTransposedView();
     EXPECT_EQ(0, m3[0][0]);
     EXPECT_EQ(3, m3[0][1]);
     EXPECT_EQ(8, m3[1][0]);
@@ -94,7 +94,7 @@ TEST(ElementwiseMultiplication, ElementwiseMultiplication_WhenTransposedViewLeft
     auto m1 = MakeMatrix({{5, 2, 0}});
     auto v = MakeVector({0, 1, 2});
 
-    auto m2 = m1.TransposedView() * v;
+    auto m2 = m1.GetTransposedView() * v;
 
     static_assert(std::is_same<decltype(m2), Matrix<3, 1, int>>::value, "Matrix multiplication type check failed");
     EXPECT_EQ(0, m2[0][0]);
@@ -107,7 +107,7 @@ TEST(ElementwiseMultiplication, ElementwiseMultiplication_WhenTransposedViewRigh
     auto m = MakeMatrix({{5, 2, 0}});
     auto v1 = MakeVector({0, 1, 2});
 
-    auto v2 = v1 * m.TransposedView();
+    auto v2 = v1 * m.GetTransposedView();
 
     static_assert(std::is_same<decltype(v2), Vector<3, int>>::value, "Matrix multiplication type check failed");
     EXPECT_EQ(0, v2[0]);

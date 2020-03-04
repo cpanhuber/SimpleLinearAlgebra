@@ -70,7 +70,7 @@ TEST(MatrixMultiplication, MatrixMultiplication_WhenTransposedViewLeft)
     auto m1 = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
     auto m2 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
 
-    auto m3 = MMult(m1.TransposedView(), m2);
+    auto m3 = MMult(m1.GetTransposedView(), m2);
     EXPECT_EQ(10, m3[0][0]);
     EXPECT_EQ(19, m3[0][1]);
     EXPECT_EQ(4, m3[1][0]);
@@ -82,7 +82,7 @@ TEST(MatrixMultiplication, MatrixMultiplication_WhenTransposedViewRight)
     auto m1 = MakeMatrix({{5, 4, 3}, {2, 1, 0}});
     auto m2 = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    auto m3 = MMult(m1, m2.TransposedView());
+    auto m3 = MMult(m1, m2.GetTransposedView());
     EXPECT_EQ(10, m3[0][0]);
     EXPECT_EQ(46, m3[0][1]);
     EXPECT_EQ(1, m3[1][0]);
@@ -94,7 +94,7 @@ TEST(MatrixMultiplication, MatrixMultiplication_WhenTransposedViewLeftVectorRigh
     auto m = MakeMatrix({{5, 4}, {3, 2}, {1, 0}});
     auto v1 = MakeVector({0, 1, 2});
 
-    auto v2 = MMult(m.TransposedView(), v1);
+    auto v2 = MMult(m.GetTransposedView(), v1);
 
     static_assert(std::is_same<decltype(v2), Vector<2, int>>::value, "Matrix multiplication type check failed");
     EXPECT_EQ(5, v2[0]);

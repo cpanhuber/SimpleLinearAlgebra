@@ -29,7 +29,17 @@ class RowViewImpl : public RowView<N, T, Raw>
         return IndexableScalarConst<N, T>(base_type::matrix_[row_index_][index]);
     }
 
+    constexpr bool IsView() const
+    {
+        return true;
+    }
+
     RowViewImpl(Raw raw, typename base_type::index_type row_index) : base_type{raw}, row_index_{row_index} {}
+
+    detail::TransposedViewImpl<N, 1, RowView<N, T, Raw>, T> GetTransposedView()
+    {
+        return detail::TransposedViewImpl<N, 1, RowView<N, T, Raw>, T>(*this);
+    }
 
   private:
     typename base_type::index_type row_index_;

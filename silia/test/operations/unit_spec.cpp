@@ -68,7 +68,7 @@ TEST(Unit, Unit_WhenTransposedView)
 {
     auto m = MakeMatrix({{6, 9, 2}});
 
-    auto unit = Unit(m.TransposedView());
+    auto unit = Unit(m.GetTransposedView());
 
     static_assert(std::is_same<decltype(unit), Vector<3, double>>::value, "unit type check failed");
     double tolerance = 1e-9;
@@ -81,7 +81,7 @@ TEST(Unit, UnitF_WhenTransposedView)
 {
     auto m = MakeMatrix({{6, 9, 2}});
 
-    auto unit = UnitF(m.TransposedView());
+    auto unit = UnitF(m.GetTransposedView());
 
     static_assert(std::is_same<decltype(unit), Vector<3, float>>::value, "unit type check failed");
     float tolerance = 1e-7;

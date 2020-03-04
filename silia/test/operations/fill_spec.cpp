@@ -41,7 +41,7 @@ TEST(Fill, Fill_WhenTransposedView)
 {
     auto v = Vector<3, int>{};
 
-    Fill(v.TransposedView(), 1);
+    Fill(v.GetTransposedView(), 1);
 
     EXPECT_EQ(1, v[0]);
     EXPECT_EQ(1, v[1]);
@@ -64,7 +64,7 @@ TEST(Fill, FillIdentity_WhenTransposedView)
 {
     auto m = Matrix<2, 2, int>{};
 
-    FillIdentity(m.TransposedView());
+    FillIdentity(m.GetTransposedView());
 
     EXPECT_EQ(1, m[0][0]);
     EXPECT_EQ(0, m[1][0]);

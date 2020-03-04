@@ -75,7 +75,7 @@ TEST(ScalarAddition, ScalarWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     int summand = 2;
 
-    auto m2 = summand + m1.TransposedView();
+    auto m2 = summand + m1.GetTransposedView();
 
     static_assert(std::is_same<decltype(m2), Matrix<2, 3, int>>::value, "scalar addition type check failed");
     EXPECT_EQ(2, m2[0][0]);
@@ -91,7 +91,7 @@ TEST(ScalarAddition, TransposedWithScalar)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     int summand = 2;
 
-    auto m2 = m1.TransposedView() + summand;
+    auto m2 = m1.GetTransposedView() + summand;
 
     static_assert(std::is_same<decltype(m2), Matrix<2, 3, int>>::value, "scalar addition type check failed");
     EXPECT_EQ(2, m2[0][0]);

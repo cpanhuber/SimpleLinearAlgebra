@@ -40,6 +40,16 @@ class VectorImpl : public Vector<N, T>
         return IndexableScalarConst<N, T>(base_type::matrix_[index][0]);
     }
 
+    constexpr bool IsView() const
+    {
+        return false;
+    }
+
+    detail::TransposedViewImpl<1, N, Vector<N, T>&, T> GetTransposedView()
+    {
+        return detail::TransposedViewImpl<1, N, Vector<N, T>&, T>(*this);
+    }
+
   private:
     VectorImpl() {}
 

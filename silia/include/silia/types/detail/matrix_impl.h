@@ -31,6 +31,16 @@ class MatrixImpl : public Matrix<N, M, T>
 
     MatrixImpl(T const (&list)[N][M]) : base_type(list) {}
 
+    constexpr bool IsView() const
+    {
+        return false;
+    }
+
+    detail::TransposedViewImpl<M, N, Matrix<N, M, T>&, T> GetTransposedView()
+    {
+        return detail::TransposedViewImpl<M, N, Matrix<N, M, T>&, T>(*this);
+    }
+
   private:
     MatrixImpl() {}
 

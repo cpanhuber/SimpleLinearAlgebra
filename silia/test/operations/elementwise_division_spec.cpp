@@ -70,7 +70,7 @@ TEST(ElementwiseDivision, ElementwiseDivision_WhenTransposedViewLeft)
     auto m1 = MakeMatrix({{5, 4}, {3, 2}});
     auto m2 = MakeMatrix({{1, 1}, {2, 3}});
 
-    auto m3 = m1.TransposedView() / m2;
+    auto m3 = m1.GetTransposedView() / m2;
     EXPECT_EQ(5, m3[0][0]);
     EXPECT_EQ(3, m3[0][1]);
     EXPECT_EQ(2, m3[1][0]);
@@ -82,7 +82,7 @@ TEST(ElementwiseDivision, ElementwiseDivision_WhenTransposedViewRight)
     auto m1 = MakeMatrix({{5, 4}, {3, 2}});
     auto m2 = MakeMatrix({{1, 6}, {12, 3}});
 
-    auto m3 = m2 / m1.TransposedView();
+    auto m3 = m2 / m1.GetTransposedView();
     EXPECT_EQ(0, m3[0][0]);
     EXPECT_EQ(2, m3[0][1]);
     EXPECT_EQ(3, m3[1][0]);
@@ -94,7 +94,7 @@ TEST(ElementwiseDivision, ElementwiseDivision_WhenTransposedViewLeftVectorRight)
     auto m1 = MakeMatrix({{5, 2, 0}});
     auto v = MakeVector({2, 1, 2});
 
-    auto m2 = m1.TransposedView() / v;
+    auto m2 = m1.GetTransposedView() / v;
 
     static_assert(std::is_same<decltype(m2), Matrix<3, 1, int>>::value, "Matrix division type check failed");
     EXPECT_EQ(2, m2[0][0]);
@@ -107,7 +107,7 @@ TEST(ElementwiseDivision, ElementwiseDivision_WhenTransposedViewRightVectorLeft)
     auto m = MakeMatrix({{5, 2, 2}});
     auto v1 = MakeVector({12, 1, 4});
 
-    auto v2 = v1 / m.TransposedView();
+    auto v2 = v1 / m.GetTransposedView();
 
     static_assert(std::is_same<decltype(v2), Vector<3, int>>::value, "Matrix division type check failed");
     EXPECT_EQ(2, v2[0]);

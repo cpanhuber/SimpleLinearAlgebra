@@ -75,7 +75,7 @@ TEST(ScalarMultiplication, ScalarWithTransposed)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     int factor = 2;
 
-    auto m2 = factor * m1.TransposedView();
+    auto m2 = factor * m1.GetTransposedView();
 
     static_assert(std::is_same<decltype(m2), Matrix<2, 3, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(0, m2[0][0]);
@@ -91,7 +91,7 @@ TEST(ScalarMultiplication, TransposedWithScalar)
     auto m1 = MakeMatrix({{0, 1}, {2, 3}, {4, 5}});
     int factor = 2;
 
-    auto m2 = m1.TransposedView() * factor;
+    auto m2 = m1.GetTransposedView() * factor;
 
     static_assert(std::is_same<decltype(m2), Matrix<2, 3, int>>::value, "scalar multiplication type check failed");
     EXPECT_EQ(0, m2[0][0]);

@@ -26,9 +26,6 @@ class TransposedViewImpl : public TransposedView<N, M, Raw, T>
 {
   public:
     using index_type = size_t;
-    friend Vector<M, T>;
-    friend Matrix<M, N, T>;
-    friend Matrix<N, M, T>;
 
     using base_type = TransposedView<N, M, Raw, T>;
 
@@ -44,7 +41,16 @@ class TransposedViewImpl : public TransposedView<N, M, Raw, T>
         return IndexSwap<M, N, Raw, T>(base_type::matrix_, index);
     }
 
-  private:
+    constexpr bool IsView() const
+    {
+        return true;
+    }
+
+    detail::TransposedViewImpl<M, N, TransposedView<N, M, Raw, T>, T> GetTransposedView()
+    {
+        return detail::TransposedViewImpl<M, N, TransposedView<N, M, Raw, T>, T>(*this);
+    }
+
     TransposedViewImpl(Raw matrix) : base_type{matrix} {}
 };
 
