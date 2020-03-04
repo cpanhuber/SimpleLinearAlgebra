@@ -85,6 +85,27 @@ TEST(Types, RowView_WhenTransposedView)
 
     EXPECT_EQ(2, m.TransposedView().RowView(2)[0]);
     EXPECT_EQ(5, m.TransposedView().RowView(2)[1]);
+
+TEST(Types, ColumnView_WhenMatrix)
+{
+    auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    auto c = m.ColumnView(1);
+
+    EXPECT_EQ(1, c[0]);
+    EXPECT_EQ(4, c[1]);
+}
+
+TEST(Types, ColumnView_WhenTransposedView)
+{
+    auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    auto t = m.GetTransposedView();
+    auto c = t.ColumnView(1);
+
+    EXPECT_EQ(3, c[0]);
+    EXPECT_EQ(4, c[1]);
+    EXPECT_EQ(5, c[2]);
 }
 
 TEST(Types, CopyConstructTransposedToMatrix)

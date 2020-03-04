@@ -1,6 +1,7 @@
 #ifndef SILIA__TYPES__DETAIL_MATRIX_TYPE_H
 #define SILIA__TYPES__DETAIL_MATRIX_TYPE_H
 
+#include <silia/types/detail/column_view_impl.h>
 #include <silia/types/detail/member_operations/copy.h>
 #include <silia/types/detail/member_operations/matrix_addition_assignment.h>
 #include <silia/types/detail/member_operations/matrix_member_division_assignment.h>
@@ -54,6 +55,11 @@ class MatrixType
     detail::RowViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&> RowView(index_type index)
     {
         return detail::RowViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&>(*this, index);
+    }
+
+    detail::ColumnViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&> ColumnView(index_type index)
+    {
+        return detail::ColumnViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&>(*this, index);
     }
 
     MatrixType& operator*=(V const& factor)

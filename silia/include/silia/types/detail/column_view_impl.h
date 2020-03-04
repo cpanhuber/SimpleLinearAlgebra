@@ -1,0 +1,54 @@
+#ifndef SILIA__TYPES__DETAIL__COLUMN_VIEW_IMPL_H
+#define SILIA__TYPES__DETAIL__COLUMN_VIEW_IMPL_H
+
+#include <silia/types/detail/factory_fwd.h>
+#include <silia/types/detail/indexable_scalar.h>
+#include <silia/types/detail/types_fwd.h>
+
+namespace silia
+{
+
+namespace detail
+{
+
+template <size_t N, typename T, typename Raw>
+class ColumnViewImpl : public ColumnView<N, T, Raw>
+{
+  public:
+    using base_type = ColumnView<N, T, Raw>;
+    using value_type = T;
+    using result_type = Vector<N, T>;
+
+    IndexableScalar<N, T> operator[](typename base_type::index_type index)
+    {
+        return IndexableScalar<N, T>(base_type::matrix_[index][column_index_]);
+    }
+
+    IndexableScalarConst<N, T> operator[](typename base_type::index_type index) const
+    {
+        return IndexableScalarConst<N, T>(base_type::matrix_[index][column_index_]);
+    }
+
+    ColumnViewImpl(Raw raw, typename base_type::index_type column_index) : base_type{raw}, column_index_{column_index}
+    {
+    }
+
+    constexpr bool IsView() const
+    {
+        return true;
+    }
+
+    detail::TransposedViewImpl<1, N, ColumnView<N, T, Raw>, T> GetTransposedView()
+    {
+        return detail::TransposedViewImpl<1, N, ColumnView<N, T, Raw>, T>(*this);
+    }
+
+  private:
+    typename base_type::index_type column_index_;
+};
+
+}  // namespace detail
+
+}  // namespace silia
+
+#endif  // SILIA__TYPES__DETAIL__COLUMN_VIEW_IMPL_H
