@@ -21,6 +21,7 @@ class VectorImpl : public Vector<N, T>
     using base_type = Vector<N, T>;
     using value_type = T;
     using result_type = base_type;
+    using index_type = typename base_type::index_type;
 
     VectorImpl(T const (&list)[N])
     {
@@ -48,6 +49,11 @@ class VectorImpl : public Vector<N, T>
     detail::TransposedViewImpl<1, N, Vector<N, T>&, T> GetTransposedView()
     {
         return detail::TransposedViewImpl<1, N, Vector<N, T>&, T>(*this);
+    }
+
+    detail::RowViewImpl<1, T, Vector<N, T>&> GetRowView(index_type index)
+    {
+        return detail::RowViewImpl<1, T, Vector<N, T>&>(*this, index);
     }
 
   private:

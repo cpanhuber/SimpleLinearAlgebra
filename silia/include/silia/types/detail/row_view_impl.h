@@ -18,6 +18,7 @@ class RowViewImpl : public RowView<N, T, Raw>
     using base_type = RowView<N, T, Raw>;
     using value_type = T;
     using result_type = Vector<N, T>;
+    using index_type = typename base_type::index_type;
 
     IndexableScalar<N, T> operator[](typename base_type::index_type index)
     {
@@ -39,6 +40,12 @@ class RowViewImpl : public RowView<N, T, Raw>
     detail::TransposedViewImpl<N, 1, RowView<N, T, Raw>, T> GetTransposedView()
     {
         return detail::TransposedViewImpl<N, 1, RowView<N, T, Raw>, T>(*this);
+    }
+
+    detail::RowViewImpl<N, T, Raw> GetRowView(index_type index)
+    {
+        assert(index == 0);
+        return *this;
     }
 
   private:

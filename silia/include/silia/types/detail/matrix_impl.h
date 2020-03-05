@@ -18,6 +18,7 @@ class MatrixImpl : public Matrix<N, M, T>
     using base_type = Matrix<N, M, T>;
     using value_type = std::array<T, M>;
     using result_type = base_type;
+    using index_type = typename base_type::index_type;
 
     std::array<T, M>& operator[](typename base_type::index_type index)
     {
@@ -39,6 +40,11 @@ class MatrixImpl : public Matrix<N, M, T>
     detail::TransposedViewImpl<M, N, Matrix<N, M, T>&, T> GetTransposedView()
     {
         return detail::TransposedViewImpl<M, N, Matrix<N, M, T>&, T>(*this);
+    }
+
+    detail::RowViewImpl<M, T, Matrix<N, M, T>&> GetRowView(index_type index)
+    {
+        return detail::RowViewImpl<M, T, Matrix<N, M, T>&>(*this, index);
     }
 
   private:
