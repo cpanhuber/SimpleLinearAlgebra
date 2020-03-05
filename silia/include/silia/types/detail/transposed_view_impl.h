@@ -54,6 +54,11 @@ class TransposedViewImpl : public TransposedView<N, M, Raw, T>
         return detail::RowViewImpl<M, T, TransposedView<N, M, Raw, T>>(*this, index);
     }
 
+    detail::ColumnViewImpl<N, T, TransposedView<N, M, Raw, T>> GetColumnView(index_type index)
+    {
+        return detail::ColumnViewImpl<N, T, TransposedView<N, M, Raw, T>>(*this, index);
+    }
+
     TransposedViewImpl(Raw matrix) : base_type{matrix} {}
 };
 

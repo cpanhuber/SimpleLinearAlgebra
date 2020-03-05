@@ -44,9 +44,15 @@ class ColumnViewImpl : public ColumnView<N, T, Raw>
         return detail::TransposedViewImpl<1, N, ColumnView<N, T, Raw>, T>(*this);
     }
 
-    detail::RowViewImpl<1, T, ColumnView<N, T, Raw>> GetColumnView(index_type index)
+    detail::RowViewImpl<1, T, ColumnView<N, T, Raw>> GetRowView(index_type index)
     {
         return detail::RowViewImpl<1, T, ColumnView<N, T, Raw>>(*this, index);
+    }
+
+    detail::ColumnViewImpl<N, T, Raw> GetColumnView(index_type index)
+    {
+        assert(index == 0);
+        return *this;
     }
 
   private:

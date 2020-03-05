@@ -127,8 +127,7 @@ TEST(Types, ColumnView_WhenTransposedView)
 {
     auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
 
-    auto t = m.GetTransposedView();
-    auto c = t.ColumnView(1);
+    auto c = m.GetTransposedView().GetColumnView(1);
 
     EXPECT_EQ(3, c[0]);
     EXPECT_EQ(4, c[1]);

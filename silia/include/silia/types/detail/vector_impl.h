@@ -56,6 +56,11 @@ class VectorImpl : public Vector<N, T>
         return detail::RowViewImpl<1, T, Vector<N, T>&>(*this, index);
     }
 
+    detail::ColumnViewImpl<N, T, Vector<N, T>&> GetColumnView(index_type index)
+    {
+        return detail::ColumnViewImpl<N, T, Vector<N, T>&>(*this, index);
+    }
+
   private:
     VectorImpl() {}
 

@@ -48,6 +48,11 @@ class RowViewImpl : public RowView<N, T, Raw>
         return *this;
     }
 
+    detail::ColumnViewImpl<1, T, RowView<N, T, Raw>> GetColumnView(index_type index)
+    {
+        return detail::ColumnViewImpl<1, T, RowView<N, T, Raw>>(*this, index);
+    }
+
   private:
     typename base_type::index_type row_index_;
 };

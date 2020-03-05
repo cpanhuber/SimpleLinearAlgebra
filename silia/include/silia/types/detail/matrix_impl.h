@@ -47,6 +47,11 @@ class MatrixImpl : public Matrix<N, M, T>
         return detail::RowViewImpl<M, T, Matrix<N, M, T>&>(*this, index);
     }
 
+    detail::ColumnViewImpl<1, T, Matrix<N, M, T>&> GetColumnView(index_type index)
+    {
+        return detail::ColumnViewImpl<1, T, Matrix<N, M, T>&>(*this, index);
+    }
+
   private:
     MatrixImpl() {}
 
