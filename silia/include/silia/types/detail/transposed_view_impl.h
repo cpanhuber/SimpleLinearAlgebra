@@ -1,16 +1,8 @@
 #ifndef SILIA__TYPES__DETAIL__TRANSPOSED_VIEW_IMPL_H
 #define SILIA__TYPES__DETAIL__TRANSPOSED_VIEW_IMPL_H
 
+#include <silia/types/detail/constexpr_min.h>
 #include <silia/types/detail/index_swap.h>
-#include <silia/types/detail/member_operations/matrix_addition_assignment.h>
-#include <silia/types/detail/member_operations/matrix_member_division_assignment.h>
-#include <silia/types/detail/member_operations/matrix_member_multiplication_assignment.h>
-#include <silia/types/detail/member_operations/matrix_substraction_assignment.h>
-#include <silia/types/detail/member_operations/scalar_addition_assignment.h>
-#include <silia/types/detail/member_operations/scalar_division_assignment.h>
-#include <silia/types/detail/member_operations/scalar_multiplication_assignment.h>
-#include <silia/types/detail/member_operations/scalar_substraction_assignment.h>
-#include <silia/types/detail/raw_matrix.h>
 #include <silia/types/detail/types_fwd.h>
 
 #include <type_traits>
@@ -57,6 +49,11 @@ class TransposedViewImpl : public TransposedView<N, M, Raw, T>
     detail::ColumnViewImpl<N, T, TransposedView<N, M, Raw, T>> GetColumnView(index_type index)
     {
         return detail::ColumnViewImpl<N, T, TransposedView<N, M, Raw, T>>(*this, index);
+    }
+
+    detail::DiagonalViewImpl<detail::constexpr_min(N, M), T, TransposedView<N, M, Raw, T>> GetDiagonalView()
+    {
+        return detail::DiagonalViewImpl<detail::constexpr_min(N, M), T, TransposedView<N, M, Raw, T>>(*this);
     }
 
     TransposedViewImpl(Raw matrix) : base_type{matrix} {}

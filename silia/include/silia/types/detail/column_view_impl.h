@@ -55,6 +55,11 @@ class ColumnViewImpl : public ColumnView<N, T, Raw>
         return *this;
     }
 
+    detail::DiagonalViewImpl<1, T, ColumnView<N, T, Raw>> GetDiagonalView()
+    {
+        return detail::DiagonalViewImpl<1, T, ColumnView<N, T, Raw>>(*this);
+    }
+
   private:
     typename base_type::index_type column_index_;
 };

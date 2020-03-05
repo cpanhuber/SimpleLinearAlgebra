@@ -61,6 +61,11 @@ class VectorImpl : public Vector<N, T>
         return detail::ColumnViewImpl<N, T, Vector<N, T>&>(*this, index);
     }
 
+    detail::DiagonalViewImpl<N, T, Vector<N, T>&> GetDiagonalView()
+    {
+        return detail::DiagonalViewImpl<1, T, Vector<N, T>&>(*this);
+    }
+
   private:
     VectorImpl() {}
 

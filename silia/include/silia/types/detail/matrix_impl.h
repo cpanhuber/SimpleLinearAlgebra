@@ -1,6 +1,7 @@
 #ifndef SILIA__TYPES__DETAIL__MATRIX_IMPL_H
 #define SILIA__TYPES__DETAIL__MATRIX_IMPL_H
 
+#include <silia/types/detail/constexpr_min.h>
 #include <silia/types/detail/factory_fwd.h>
 #include <silia/types/detail/types_fwd.h>
 
@@ -47,9 +48,14 @@ class MatrixImpl : public Matrix<N, M, T>
         return detail::RowViewImpl<M, T, Matrix<N, M, T>&>(*this, index);
     }
 
-    detail::ColumnViewImpl<1, T, Matrix<N, M, T>&> GetColumnView(index_type index)
+    detail::ColumnViewImpl<N, T, Matrix<N, M, T>&> GetColumnView(index_type index)
     {
-        return detail::ColumnViewImpl<1, T, Matrix<N, M, T>&>(*this, index);
+        return detail::ColumnViewImpl<N, T, Matrix<N, M, T>&>(*this, index);
+    }
+
+    detail::DiagonalViewImpl<detail::constexpr_min(N, M), T, Matrix<N, M, T>> GetDiagonalView()
+    {
+        return detail::DiagonalViewImpl<detail::constexpr_min(N, M), T, Matrix<N, M, T>>(*this);
     }
 
   private:

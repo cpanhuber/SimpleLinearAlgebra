@@ -2,6 +2,7 @@
 #define SILIA__TYPES__DETAIL_MATRIX_TYPE_H
 
 #include <silia/types/detail/column_view_impl.h>
+#include <silia/types/detail/diagonal_view_impl.h>
 #include <silia/types/detail/member_operations/copy.h>
 #include <silia/types/detail/member_operations/matrix_addition_assignment.h>
 #include <silia/types/detail/member_operations/matrix_member_division_assignment.h>
@@ -57,7 +58,7 @@ class MatrixType
     }
 
     template <typename T = Derived>
-    auto RowView(index_type index) -> decltype(std::declval<T>().GetRowView(index))
+    auto GetRowView(index_type index) -> decltype(std::declval<T>().GetRowView(index))
     {
         static_assert(std::is_same<T, Derived>::value,
                       "Only the default template argument is allowed for MatrixType::GetRowView()");
@@ -65,9 +66,22 @@ class MatrixType
         return static_cast<T*>(this)->GetRowView(index);
     }
 
-    detail::ColumnViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&> ColumnView(index_type index)
+    template <typename T = Derived>
+    auto GetColumnView(index_type index) -> decltype(std::declval<T>().GetColumnView(index))
     {
-        return detail::ColumnViewImpl<M, V, MatrixType<N, M, Raw, Derived, V>&>(*this, index);
+        static_assert(std::is_same<T, Derived>::value,
+                      "Only the default template argument is allowed for MatrixType::GetColumnView()");
+
+        return static_cast<T*>(this)->GetColumnView(index);
+    }
+
+    template <typename T = Derived>
+    auto GetDiagonalView() -> decltype(std::declval<T>().GetDiagonalView())
+    {
+        static_assert(std::is_same<T, Derived>::value,
+                      "Only the default template argument is allowed for MatrixType::GetDiagonalView()");
+
+        return static_cast<T*>(this)->GetDiagonalView();
     }
 
     MatrixType& operator*=(V const& factor)

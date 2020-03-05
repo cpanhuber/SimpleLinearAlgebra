@@ -1,8 +1,12 @@
 #ifndef SILIA__TYPES__TYPES_H
 #define SILIA__TYPES__TYPES_H
 
+#include <silia/types/detail/column_view_impl.h>
+#include <silia/types/detail/diagonal_view_impl.h>
 #include <silia/types/detail/matrix_impl.h>
 #include <silia/types/detail/matrix_type.h>
+#include <silia/types/detail/row_view_impl.h>
+#include <silia/types/detail/transposed_view_impl.h>
 #include <silia/types/detail/types_fwd.h>
 #include <silia/types/detail/vector_impl.h>
 

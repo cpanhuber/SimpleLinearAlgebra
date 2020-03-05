@@ -26,6 +26,9 @@ class RowViewImpl;
 template <size_t N, typename T, typename Raw>
 class ColumnViewImpl;
 
+template <size_t N, typename T, typename Raw>
+class DiagonalViewImpl;
+
 template <size_t N, size_t M, typename R, typename T, typename V>
 class MatrixType;
 
@@ -42,6 +45,9 @@ using RowView = detail::MatrixType<N, 1, Raw, detail::RowViewImpl<N, T, Raw>, T>
 
 template <size_t N, typename T, typename Raw>
 using ColumnView = detail::MatrixType<1, N, Raw, detail::ColumnViewImpl<N, T, Raw>, T>;
+
+template <size_t N, typename T, typename Raw>
+using DiagonalView = detail::MatrixType<N, 1, Raw, detail::DiagonalViewImpl<N, T, Raw>, T>;
 
 template <size_t N, typename T>
 using Vector = detail::MatrixType<N, 1, detail::RawMatrix<N, 1, T>, detail::VectorImpl<N, T>, T>;
