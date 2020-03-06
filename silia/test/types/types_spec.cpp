@@ -170,6 +170,24 @@ TEST(Types, ColumnView_WhenWriteToMatrix)
     EXPECT_EQ(8, m[2][2]);
 }
 
+TEST(Types, ColumnView_WhenWriteDiagonalView)
+{
+    auto m1 = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
+    auto m2 = MakeMatrix({{10, 11, 12}, {13, 14, 15}, {16, 17, 18}});
+
+    m1.GetColumnView(0) = m2.GetDiagonalView();
+
+    EXPECT_EQ(10, m1[0][0]);
+    EXPECT_EQ(1, m1[0][1]);
+    EXPECT_EQ(2, m1[0][2]);
+    EXPECT_EQ(14, m1[1][0]);
+    EXPECT_EQ(4, m1[1][1]);
+    EXPECT_EQ(5, m1[1][2]);
+    EXPECT_EQ(18, m1[2][0]);
+    EXPECT_EQ(7, m1[2][1]);
+    EXPECT_EQ(8, m1[2][2]);
+}
+
 TEST(Types, DiagonalView_WhenMatrix)
 {
     auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
@@ -196,9 +214,7 @@ TEST(Types, DiagonalView_WhenModify)
 {
     auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
 
-
     m.GetTransposedView().GetDiagonalView()[1] = 9;
-
 
     EXPECT_EQ(9, m[1][1]);
 }
