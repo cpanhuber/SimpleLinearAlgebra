@@ -156,13 +156,13 @@ class MatrixType
     template <typename OtherRaw, typename OtherDerived>
     MatrixType(MatrixType<N, M, OtherRaw, OtherDerived, V> const& other) : matrix_{}
     {
-        Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Raw, V>(other, matrix_);
+        Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Derived, V>(other, static_cast<Derived&>(*this));
     }
 
     template <typename OtherRaw, typename OtherDerived>
     MatrixType& operator=(MatrixType<N, M, OtherRaw, OtherDerived, V> const& other)
     {
-        Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Raw, V>(other, matrix_);
+        Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Derived, V>(other, static_cast<Derived&>(*this));
         return *this;
     }
 

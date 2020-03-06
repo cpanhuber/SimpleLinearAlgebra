@@ -20,6 +20,8 @@ class DiagonalViewImpl : public DiagonalView<N, T, Raw>
     using result_type = Vector<N, T>;
     using index_type = typename base_type::index_type;
 
+    using base_type::operator=;
+
     IndexableScalar<N, T> operator[](typename base_type::index_type index)
     {
         return IndexableScalar<N, T>(base_type::matrix_[index][index]);

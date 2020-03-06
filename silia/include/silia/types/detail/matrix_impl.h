@@ -53,9 +53,9 @@ class MatrixImpl : public Matrix<N, M, T>
         return detail::ColumnViewImpl<N, T, Matrix<N, M, T>&>(*this, index);
     }
 
-    detail::DiagonalViewImpl<detail::constexpr_min(N, M), T, Matrix<N, M, T>> GetDiagonalView()
+    detail::DiagonalViewImpl<detail::constexpr_min(N, M), T, Matrix<N, M, T>&> GetDiagonalView()
     {
-        return detail::DiagonalViewImpl<detail::constexpr_min(N, M), T, Matrix<N, M, T>>(*this);
+        return detail::DiagonalViewImpl<detail::constexpr_min(N, M), T, Matrix<N, M, T>&>(*this);
     }
 
   private:

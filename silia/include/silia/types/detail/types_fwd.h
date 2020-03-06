@@ -41,10 +41,10 @@ template <size_t N, size_t M, typename Raw, typename T>
 using TransposedView = detail::MatrixType<N, M, Raw, detail::TransposedViewImpl<N, M, Raw, T>, T>;
 
 template <size_t N, typename T, typename Raw>
-using RowView = detail::MatrixType<N, 1, Raw, detail::RowViewImpl<N, T, Raw>, T>;
+using RowView = detail::MatrixType<1, N, Raw, detail::RowViewImpl<N, T, Raw>, T>;
 
 template <size_t N, typename T, typename Raw>
-using ColumnView = detail::MatrixType<1, N, Raw, detail::ColumnViewImpl<N, T, Raw>, T>;
+using ColumnView = detail::MatrixType<N, 1, Raw, detail::ColumnViewImpl<N, T, Raw>, T>;
 
 template <size_t N, typename T, typename Raw>
 using DiagonalView = detail::MatrixType<N, 1, Raw, detail::DiagonalViewImpl<N, T, Raw>, T>;

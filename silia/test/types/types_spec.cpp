@@ -103,6 +103,15 @@ TEST(Types, RowView_WhenMatrix)
     EXPECT_EQ(5, m.GetRowView(1)[2]);
 }
 
+TEST(Types, RowView_WhenModify)
+{
+    auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    m.GetRowView(1)[1] = 9;
+
+    EXPECT_EQ(9, m[1][1]);
+}
+
 TEST(Types, RowView_WhenTransposedView)
 {
     auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
@@ -111,6 +120,15 @@ TEST(Types, RowView_WhenTransposedView)
 
     EXPECT_EQ(2, r[0]);
     EXPECT_EQ(5, r[1]);
+}
+
+TEST(Types, RowView_WhenChainedWhenModify)
+{
+    auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    m.GetTransposedView().GetRowView(0)[1] = 9;
+
+    EXPECT_EQ(9, m[1][0]);
 }
 
 TEST(Types, ColumnView_WhenMatrix)
@@ -134,6 +152,24 @@ TEST(Types, ColumnView_WhenTransposedView)
     EXPECT_EQ(5, c[2]);
 }
 
+TEST(Types, ColumnView_WhenWriteToMatrix)
+{
+    auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
+    auto v = MakeVector({9, 10, 11});
+
+    m.GetColumnView(1) = v;
+
+    EXPECT_EQ(0, m[0][0]);
+    EXPECT_EQ(9, m[0][1]);
+    EXPECT_EQ(2, m[0][2]);
+    EXPECT_EQ(3, m[1][0]);
+    EXPECT_EQ(10, m[1][1]);
+    EXPECT_EQ(5, m[1][2]);
+    EXPECT_EQ(6, m[2][0]);
+    EXPECT_EQ(11, m[2][1]);
+    EXPECT_EQ(8, m[2][2]);
+}
+
 TEST(Types, DiagonalView_WhenMatrix)
 {
     auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
@@ -154,6 +190,54 @@ TEST(Types, DiagonalView_WhenTransposedView)
     EXPECT_EQ(0, c[0]);
     EXPECT_EQ(4, c[1]);
     EXPECT_EQ(8, c[2]);
+}
+
+TEST(Types, DiagonalView_WhenModify)
+{
+    auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
+
+
+    m.GetTransposedView().GetDiagonalView()[1] = 9;
+
+
+    EXPECT_EQ(9, m[1][1]);
+}
+
+TEST(Types, DiagonalView_WhenWriteToMatrix)
+{
+    auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
+
+    auto v = MakeVector({9, 10, 11});
+    m.GetDiagonalView()[0] = 1;
+    m.GetDiagonalView() = v;
+
+    EXPECT_EQ(9, m[0][0]);
+    EXPECT_EQ(1, m[0][1]);
+    EXPECT_EQ(2, m[0][2]);
+    EXPECT_EQ(3, m[1][0]);
+    EXPECT_EQ(10, m[1][1]);
+    EXPECT_EQ(5, m[1][2]);
+    EXPECT_EQ(6, m[2][0]);
+    EXPECT_EQ(7, m[2][1]);
+    EXPECT_EQ(11, m[2][2]);
+}
+
+TEST(Types, DiagonalView_WhenWriteToTransposed)
+{
+    auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
+    auto v = MakeVector({9, 10, 11});
+
+    m.GetTransposedView().GetDiagonalView() = v;
+
+    EXPECT_EQ(9, m[0][0]);
+    EXPECT_EQ(1, m[0][1]);
+    EXPECT_EQ(2, m[0][2]);
+    EXPECT_EQ(3, m[1][0]);
+    EXPECT_EQ(10, m[1][1]);
+    EXPECT_EQ(5, m[1][2]);
+    EXPECT_EQ(6, m[2][0]);
+    EXPECT_EQ(7, m[2][1]);
+    EXPECT_EQ(11, m[2][2]);
 }
 
 TEST(Types, CopyConstructTransposedToMatrix)
