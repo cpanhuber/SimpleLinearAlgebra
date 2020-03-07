@@ -11,23 +11,72 @@ namespace silia
 namespace detail
 {
 
+template <typename RowView, typename V>
+class TemporaryRowValue
+{
+  public:
+    using index_type = size_t;
+
+    V& operator[](index_type index)
+    {
+        return row_view_.At(index);
+    }
+
+    V operator[](index_type index) const
+    {
+        return row_view_.At(index);
+    }
+
+    TemporaryRowValue& operator=(V const& v)
+    {
+        row_view_.At(index_) = v;
+        return *this;
+    }
+
+    operator V()
+    {
+        return row_view_.At(index_);
+    }
+
+    operator V() const
+    {
+        return row_view_.At(index_);
+    }
+
+    TemporaryRowValue(RowView& row_view, index_type index) : row_view_{row_view}, index_{index} {}
+
+  private:
+    RowView& row_view_;
+    index_type index_;
+};
+
 template <size_t N, typename T, typename Raw>
 class RowViewImpl : public RowView<N, T, Raw>
 {
   public:
     using base_type = RowView<N, T, Raw>;
     using value_type = T;
-    using result_type = Vector<N, T>;
+    using result_type = Matrix<1, N, T>;
     using index_type = typename base_type::index_type;
 
-    IndexableScalar<N, T> operator[](typename base_type::index_type index)
+    TemporaryRowValue<RowViewImpl<N, T, Raw>, T> operator[](typename base_type::index_type index)
     {
-        return IndexableScalar<N, T>(base_type::matrix_[row_index_][index]);
+        return TemporaryRowValue<RowViewImpl<N, T, Raw>, T>(*this, index);
     }
 
-    IndexableScalarConst<N, T> operator[](typename base_type::index_type index) const
+    TemporaryRowValue<RowViewImpl<N, T, Raw> const, T> const operator[](typename base_type::index_type index) const
     {
-        return IndexableScalarConst<N, T>(base_type::matrix_[row_index_][index]);
+        return TemporaryRowValue<RowViewImpl<N, T, Raw> const, T>(*this, index);
+    }
+
+    T& At(index_type index)
+    {
+        return base_type::matrix_[row_index_][index];
+    }
+
+    T At(index_type index) const
+    {
+        return base_type::matrix_[row_index_][index];
     }
 
     constexpr bool IsView() const
