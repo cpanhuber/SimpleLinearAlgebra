@@ -302,6 +302,18 @@ TEST(Types, IsView)
     EXPECT_TRUE(d.IsView());
 }
 
+TEST(Types, Copy_WhenRowView)
+{
+    Matrix<2, 3, int> m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    auto r = m.GetRowView(1).Copy();
+
+    // static_assert(std::is_same<Matrix<1, 3, int>, decltype(r)>::value, "Type check of Copy of RowView failed");
+    EXPECT_EQ(3, r[0][0]);
+    EXPECT_EQ(4, r[0][1]);
+    EXPECT_EQ(5, r[0][2]);
+}
+
 }  // namespace
 
 }  // namespace silia

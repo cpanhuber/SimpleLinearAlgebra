@@ -84,6 +84,17 @@ class MatrixType
         return static_cast<T*>(this)->GetDiagonalView();
     }
 
+    template <typename T = Derived>
+    auto Copy() -> typename T::result_type
+    {
+        static_assert(std::is_same<T, Derived>::value,
+                      "Only the default template argument is allowed for MatrixType::Copy()");
+
+        using copied_type = typename T::result_type;
+        copied_type result = *this;
+        return result;
+    }
+
     MatrixType& operator*=(V const& factor)
     {
         ScalarMultiplyAssignImpl<N, M, decltype(*this), V>(*this, factor);
@@ -156,13 +167,15 @@ class MatrixType
     template <typename OtherRaw, typename OtherDerived>
     MatrixType(MatrixType<N, M, OtherRaw, OtherDerived, V> const& other) : matrix_{}
     {
-        Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Derived, V>(other, static_cast<Derived&>(*this));
+        detail::Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Derived, V>(other,
+                                                                                    static_cast<Derived&>(*this));
     }
 
     template <typename OtherRaw, typename OtherDerived>
     MatrixType& operator=(MatrixType<N, M, OtherRaw, OtherDerived, V> const& other)
     {
-        Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Derived, V>(other, static_cast<Derived&>(*this));
+        detail::Copy<N, M, MatrixType<N, M, OtherRaw, OtherDerived, V>, Derived, V>(other,
+                                                                                    static_cast<Derived&>(*this));
         return *this;
     }
 
