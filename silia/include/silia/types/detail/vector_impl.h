@@ -23,6 +23,8 @@ class VectorImpl : public Vector<N, T>
     using result_type = base_type;
     using index_type = typename base_type::index_type;
 
+    using base_type::operator=;
+
     VectorImpl(T const (&list)[N])
     {
         for (size_t i = 0; i < N; ++i)

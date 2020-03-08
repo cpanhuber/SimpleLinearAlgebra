@@ -6,6 +6,7 @@
 #include <silia/types/detail/types_fwd.h>
 
 #include <array>
+#include <iostream>
 
 namespace silia
 {
@@ -20,6 +21,8 @@ class MatrixImpl : public Matrix<N, M, T>
     using value_type = std::array<T, M>;
     using result_type = base_type;
     using index_type = typename base_type::index_type;
+
+    using base_type::operator=;
 
     std::array<T, M>& operator[](typename base_type::index_type index)
     {
