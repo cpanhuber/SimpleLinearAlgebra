@@ -171,6 +171,12 @@ class MatrixType
                                                                                     static_cast<Derived&>(*this));
     }
 
+    MatrixType& operator=(MatrixType<N, M, Raw, Derived, V> const& other)
+    {
+        detail::Copy<N, M, MatrixType<N, M, Raw, Derived, V>, Derived, V>(other, static_cast<Derived&>(*this));
+        return *this;
+    }
+
     template <typename OtherRaw, typename OtherDerived>
     MatrixType& operator=(MatrixType<N, M, OtherRaw, OtherDerived, V> const& other)
     {

@@ -59,6 +59,8 @@ class RowViewImpl : public RowView<N, T, Raw>
     using result_type = Matrix<1, N, T>;
     using index_type = typename base_type::index_type;
 
+    using base_type::operator=;
+
     TemporaryRowValue<RowViewImpl<N, T, Raw>, T> operator[](typename base_type::index_type index)
     {
         return TemporaryRowValue<RowViewImpl<N, T, Raw>, T>(*this, index);

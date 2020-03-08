@@ -21,6 +21,8 @@ class TransposedViewImpl : public TransposedView<N, M, Raw, T>
     using index_type = typename base_type::index_type;
     using result_type = Matrix<N, M, T>;
 
+    using base_type::operator=;
+
     IndexSwap<M, N, Raw, T> operator[](index_type index)
     {
         return IndexSwap<M, N, Raw, T>(base_type::matrix_, index);

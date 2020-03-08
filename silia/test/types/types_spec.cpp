@@ -188,6 +188,60 @@ TEST(Types, ColumnView_WhenWriteDiagonalView)
     EXPECT_EQ(8, m1[2][2]);
 }
 
+TEST(Types, ColumnView_WhenWriteColumnView)
+{
+    auto m1 = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
+    auto m2 = MakeMatrix({{10, 11, 12}, {13, 14, 15}, {16, 17, 18}});
+
+    m1.GetColumnView(0) = m2.GetColumnView(1);
+
+    EXPECT_EQ(11, m1[0][0]);
+    EXPECT_EQ(1, m1[0][1]);
+    EXPECT_EQ(2, m1[0][2]);
+    EXPECT_EQ(14, m1[1][0]);
+    EXPECT_EQ(4, m1[1][1]);
+    EXPECT_EQ(5, m1[1][2]);
+    EXPECT_EQ(17, m1[2][0]);
+    EXPECT_EQ(7, m1[2][1]);
+    EXPECT_EQ(8, m1[2][2]);
+}
+
+TEST(Types, ColumnView_WhenWriteMatrixToColumnView)
+{
+    auto m1 = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
+    auto m2 = MakeMatrix({{10}, {11}, {12}});
+
+    m1.GetColumnView(1) = m2;
+
+    EXPECT_EQ(0, m1[0][0]);
+    EXPECT_EQ(10, m1[0][1]);
+    EXPECT_EQ(2, m1[0][2]);
+    EXPECT_EQ(3, m1[1][0]);
+    EXPECT_EQ(11, m1[1][1]);
+    EXPECT_EQ(5, m1[1][2]);
+    EXPECT_EQ(6, m1[2][0]);
+    EXPECT_EQ(12, m1[2][1]);
+    EXPECT_EQ(8, m1[2][2]);
+}
+
+TEST(Types, RowView_WhenWriteMatrixToRowView)
+{
+    auto m1 = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
+    auto m2 = MakeMatrix({{10, 11, 12}});
+
+    m1.GetRowView(1) = m2;
+
+    EXPECT_EQ(0, m1[0][0]);
+    EXPECT_EQ(1, m1[0][1]);
+    EXPECT_EQ(2, m1[0][2]);
+    EXPECT_EQ(10, m1[1][0]);
+    EXPECT_EQ(11, m1[1][1]);
+    EXPECT_EQ(12, m1[1][2]);
+    EXPECT_EQ(6, m1[2][0]);
+    EXPECT_EQ(7, m1[2][1]);
+    EXPECT_EQ(8, m1[2][2]);
+}
+
 TEST(Types, DiagonalView_WhenMatrix)
 {
     auto m = MakeMatrix({{0, 1, 2}, {3, 4, 5}, {6, 7, 8}});
@@ -312,6 +366,64 @@ TEST(Types, Copy_WhenRowView)
     EXPECT_EQ(3, r[0][0]);
     EXPECT_EQ(4, r[0][1]);
     EXPECT_EQ(5, r[0][2]);
+}
+
+TEST(Types, Copy_WhenRowViewNoReference)
+{
+    Matrix<2, 3, int> m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    auto r = m.GetRowView(1).Copy();
+    m[1][0] = 6;
+
+    // static_assert(std::is_same<Matrix<1, 3, int>, decltype(r)>::value, "Type check of Copy of RowView failed");
+    EXPECT_EQ(3, r[0][0]);
+    EXPECT_EQ(4, r[0][1]);
+    EXPECT_EQ(5, r[0][2]);
+}
+
+TEST(Types, RowView_WhenAssignDuplicateRow)
+{
+    Matrix<2, 3, int> m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    m.GetRowView(1) = m.GetRowView(0);
+
+    // static_assert(std::is_same<Matrix<1, 3, int>, decltype(r)>::value, "Type check of Copy of RowView failed");
+    EXPECT_EQ(0, m[0][0]);
+    EXPECT_EQ(1, m[0][1]);
+    EXPECT_EQ(2, m[0][2]);
+    EXPECT_EQ(0, m[1][0]);
+    EXPECT_EQ(1, m[1][1]);
+    EXPECT_EQ(2, m[1][2]);
+}
+
+TEST(Types, RowView_WhenReassignCopySource)
+{
+    Matrix<2, 3, int> m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    auto r = m.GetRowView(1).Copy();
+    m.GetRowView(1) = m.GetRowView(0);
+
+    // static_assert(std::is_same<Matrix<1, 3, int>, decltype(r)>::value, "Type check of Copy of RowView failed");
+    EXPECT_EQ(3, r[0][0]);
+    EXPECT_EQ(4, r[0][1]);
+    EXPECT_EQ(5, r[0][2]);
+}
+
+TEST(Types, RowView_WhenSwap)
+{
+    Matrix<2, 3, int> m = MakeMatrix({{0, 1, 2}, {3, 4, 5}});
+
+    auto r = m.GetRowView(1).Copy();
+    m.GetRowView(1) = m.GetRowView(0);
+    m.GetRowView(0) = r;
+
+    // static_assert(std::is_same<Matrix<1, 3, int>, decltype(r)>::value, "Type check of Copy of RowView failed");
+    EXPECT_EQ(3, m[0][0]);
+    EXPECT_EQ(4, m[0][1]);
+    EXPECT_EQ(5, m[0][2]);
+    EXPECT_EQ(0, m[1][0]);
+    EXPECT_EQ(1, m[1][1]);
+    EXPECT_EQ(2, m[1][2]);
 }
 
 }  // namespace
